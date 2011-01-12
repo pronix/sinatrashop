@@ -1,20 +1,137 @@
-Here is the index.
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
 
-<%= response %>
+<head>
+  <title>Locate Express | Coming Soon</title>
+  <meta name="description" content="Locate Express" />
+  <meta name="keywords" content="Locate Express" />
+  <style type="text/css">
+    body { margin: 10px auto; width: 960px; font-size: 12px; }
+    div.product { float: left; width: 29%; }
+    div.buy { float: right; width: 69%; }
+    label { width: 100px; float: left; }
+    p { margin: 5px 0px; } 
+    div.error { color: red; }
+  </style>
+</head>
+    
+<body>
 
-<form action="/" method="post">
-	<p>email:<input type="text" name="email" /></p>
-	<p>first name:<input type="text" name="bill_firstname" /></p>
-	<p>last name:<input type="text" name="bill_lastname" /></p>
-	<p>street1:<input type="text" name="bill_address1" /></p>
-	<p>street2:<input type="text" name="bill_address2" /></p>
-	<p>city:<input type="text" name="bill_city" /></p>
-	<p>state:<input type="text" name="bill_state" /></p>
-	<p>first name:<input type="text" name="ship_firstname" /></p>
-	<p>last name:<input type="text" name="ship_lastname" /></p>
-	<p>street1:<input type="text" name="ship_address1" /></p>
-	<p>street2:<input type="text" name="ship_address2" /></p>
-	<p>city:<input type="text" name="ship_city" /></p>
-	<p>state:<input type="text" name="ship_state" /></p>
-	<p><input type="submit" value="Submit" /></p>
-</form>
+<div class="product">
+Your Awesome Product Here.
+</div>
+
+<div class="buy">
+  <% if success == 1 %>
+  <p>Congratulations on your purchase!</p>
+  <% else %>
+  <div class="error">
+  <%= response.to_s %>
+  </div>
+  <form action="/" method="post">
+    <table width="100%" cellpadding="0" cellspacing="0">
+      <tr>
+        <td valign="top">
+          <h3>Personal Information</h3>
+          <p>
+            <label>email:</label>
+            <input type="text" name="[order]email" value="<%= params[:order][:email].to_s %>"/>
+          </p>
+          <p>
+            <label>phone:</label>
+            <input type="text" name="[order]phone" value="<%= params[:order][:phone].to_s %>" />
+          </p>
+        </td><td>
+          <h3>Payment</h3>
+          <p>
+            <label>credit card number:</label>
+            <input type="text" name="[credit_card]number" />
+          </p>
+          <p>
+            <label>verification value:</label>
+            <input type="text" name="[credit_card]verification_value" />
+          </p>
+          <p>
+            expiration date:
+            <select name="[credit_card]month">
+            <% 1.upto(12) do |a| %>
+            <option value="<%= a %>"><%= a %></option>
+            <% end %>
+            </select>
+            <select name="[credit_card]year">
+            <% 2011.upto(2020) do |a| %>
+            <option value="<%= a %>"><%= a %></option>
+            <% end %>
+            </select>
+          </p>
+        </td>
+      </tr>
+      <tr><td>
+        <h3>Billing Address</h3>
+          <p>
+            <label>first name:</label>
+            <input type="text" name="[order]bill_firstname" value="<%= params[:order][:bill_firstname].to_s %>" />
+          </p>
+          <p>
+            <label>last name:</label>
+            <input type="text" name="[order]bill_lastname" value="<%= params[:order][:bill_lastname].to_s %>" />
+          </p>
+          <p>
+            <label>street1:</label>
+            <input type="text" name="[order]bill_address1" value="<%= params[:order][:bill_address1].to_s %>" />
+          </p>
+          <p>
+            <label>street2:</label>
+            <input type="text" name="[order]bill_address2" value="<%= params[:order][:bill_address2].to_s %>" />
+          </p>
+          <p>
+            <label>city:</label>
+            <input type="text" name="[order]bill_city" value="<%= params[:order][:bill_city].to_s %>" />
+          </p>
+          <p>
+            <label>state:</label>
+            <input type="text" name="[order]bill_state" value="<%= params[:order][:bill_state].to_s %>" />
+          </p>
+          <p>
+            <label>zip:</label>
+            <input type="text" name="[order]bill_zipcode" value="<%= params[:order][:bill_zipcode].to_s %>" />
+          </p>
+      </td><td>
+        <h3>Shipping Address</h3>
+          <p>
+            <label>first name:</label>
+            <input type="text" name="[order]ship_firstname" value="<%= params[:order][:ship_firstname].to_s %>" />
+          </p>
+          <p>
+            <label>last name:</label>
+            <input type="text" name="[order]ship_lastname" value="<%= params[:order][:ship_lastname].to_s %>" />
+          </p>
+          <p>
+            <label>street1:</label>
+            <input type="text" name="[order]ship_address1" value="<%= params[:order][:ship_address1].to_s %>" />
+          </p>
+          <p>
+            <label>street2:</label>
+            <input type="text" name="[order]ship_address2" value="<%= params[:order][:ship_address2].to_s %>" />
+          </p>
+          <p>
+            <label>city:</label>
+            <input type="text" name="[order]ship_city" value="<%= params[:order][:ship_city].to_s %>" />
+          </p>
+          <p>
+            <label>state:</label>
+            <input type="text" name="[order]ship_state" value="<%= params[:order][:ship_state].to_s %>" />
+          </p>
+          <p>
+            <label>zip:</label>
+            <input type="text" name="[order]ship_zipcode" value="<%= params[:order][:ship_zipcode].to_s %>" />
+          </p>
+        </td>
+      </tr>
+    </table>
+    <p><input type="submit" value="Submit" /></p>
+  </form>
+  <% end %>
+</div>
+</body>
+</html>

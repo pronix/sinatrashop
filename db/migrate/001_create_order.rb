@@ -17,6 +17,7 @@ class CreateOrder < ActiveRecord::Migration
       t.integer  "ship_state"
       t.string   "ship_zipcode"
       t.string   "phone"
+      t.string   "status", :default => "pending"
       t.timestamps
     end
   end

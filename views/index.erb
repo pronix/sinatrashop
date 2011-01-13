@@ -5,34 +5,29 @@
   <title>Locate Express | Coming Soon</title>
   <meta name="description" content="Locate Express" />
   <meta name="keywords" content="Locate Express" />
-  <style type="text/css">
-    body { margin: 10px auto; width: 960px; font-size: 12px; }
-    div.product { float: left; width: 29%; }
-    div.buy { float: right; width: 69%; }
-    label { width: 100px; float: left; }
-    p { margin: 5px 0px; } 
-    div.error { color: red; }
-  </style>
+  <link href="/public/stylesheets/style.css" media="screen" rel="stylesheet" type="text/css" />
 </head>
     
 <body>
 
-<div class="product">
-Your Awesome Product Here.
-</div>
+<img src="/public/images/book.png" class="product" />
 
 <div class="buy">
   <% if success == 1 %>
-  <p>Congratulations on your purchase!</p>
+  <div class="center">
+  <img src="/public/images/success.png" class="success" />
+  </div>
   <% else %>
+  <div class="center">
+    <img src="/public/images/buyitnow.png" class="buyitnow" />
+  </div>
   <div class="error">
   <%= response.to_s %>
   </div>
   <form action="/" method="post">
     <table width="100%" cellpadding="0" cellspacing="0">
       <tr>
-        <td valign="top">
-          <h3>Personal Information</h3>
+        <td width="50%" valign="top">
           <p>
             <label>email:</label>
             <input type="text" name="[order]email" value="<%= params[:order][:email].to_s %>"/>
@@ -42,23 +37,22 @@ Your Awesome Product Here.
             <input type="text" name="[order]phone" value="<%= params[:order][:phone].to_s %>" />
           </p>
         </td><td>
-          <h3>Payment</h3>
           <p>
-            <label>credit card number:</label>
+            <label>card number:</label>
             <input type="text" name="[credit_card]number" />
           </p>
           <p>
-            <label>verification value:</label>
+            <label>card code:</label>
             <input type="text" name="[credit_card]verification_value" />
           </p>
           <p>
-            expiration date:
-            <select name="[credit_card]month">
+            <label>expiration date:</label>
+            <select name="[credit_card]month" id="month">
             <% 1.upto(12) do |a| %>
             <option value="<%= a %>"><%= a %></option>
             <% end %>
             </select>
-            <select name="[credit_card]year">
+            <select name="[credit_card]year" id="year">
             <% 2011.upto(2020) do |a| %>
             <option value="<%= a %>"><%= a %></option>
             <% end %>
@@ -90,7 +84,9 @@ Your Awesome Product Here.
           </p>
           <p>
             <label>state:</label>
-            <input type="text" name="[order]bill_state" value="<%= params[:order][:bill_state].to_s %>" />
+            <select name="[order]bill_state">
+            <%= erb :states, :locals => { :field => "bill_state", :params => params } %>
+            </select>
           </p>
           <p>
             <label>zip:</label>
@@ -120,7 +116,9 @@ Your Awesome Product Here.
           </p>
           <p>
             <label>state:</label>
-            <input type="text" name="[order]ship_state" value="<%= params[:order][:ship_state].to_s %>" />
+            <select name="[order]ship_state">
+            <%= erb :states, :locals => { :field => "ship_state", :params => params } %>
+            </select>
           </p>
           <p>
             <label>zip:</label>
@@ -129,7 +127,9 @@ Your Awesome Product Here.
         </td>
       </tr>
     </table>
-    <p><input type="submit" value="Submit" /></p>
+    <div class="center">
+      <input type="image" src="/public/images/submit.png" value="Submit" class="submit" />
+    </div>
   </form>
   <% end %>
 </div>

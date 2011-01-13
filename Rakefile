@@ -3,7 +3,8 @@ namespace :db do
     require 'rubygems'
     require 'logger'
     require 'active_record'
-    ActiveRecord::Base.establish_connection :adapter => 'sqlite3', :database => 'db/development.sqlite3.db'
+    ActiveRecord::Base.establish_connection :adapter => 'sqlite3',
+      :database => 'db/development.sqlite3.db'
   end
 
   desc "Migrate the database"

@@ -1,0 +1,15 @@
+body { margin: 10px auto; width: 960px; font-size: 10px; font-family: "Lucida Sans", sans-serif; }
+label { width: 80px; float: left; position: relative; top: 7px; text-align: right; padding-right: 10px; }
+p { margin: 5px 0px; }
+form { clear: both; }
+div.error { color: #fa4e08; width: 480px; padding-left: 90px; line-height: 1.7em; font-size: 11px; }
+input, select { width: 150px; }
+select#month, select#year { width: 60px; }
+h3 { font-size: 12px; font-weight: normal; text-align: center;  }
+
+img.buyitnow { margin: 10px 0px; }
+img.product { float: left; width: 29%; margin-top: 30px; }
+div.buy { float: right; width: 69%; }
+div.center { width: 100%; text-align: center; }
+img.success { margin-top: 150px; }
+input.submit { width: 200px; margin-top: 10px; }

@@ -4,16 +4,10 @@ require 'active_record'
 require 'configuration'
 require 'models/order'
 
-configure do
-  set :public, File.dirname('/var/www/ep/shop/public')
-end
-  
-  
 get '/' do
   erb :index, :locals => { :response => '',
-                           :params => { :order => {},
-                             :credit_card => {} },
-                           :success => 0 }
+    :params => { :order => {}, :credit_card => {} },
+    :success => 0 }
 end
   
 post '/' do

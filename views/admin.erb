@@ -22,6 +22,7 @@ Admin!
 <%= order.ship_address2 + '<br />' if !order.ship_address2.blank? %>
 <%= order.ship_city %> <%= order.ship_state %>, <%= order.ship_zipcode %><br />
 <%= order.phone %>
+<%= order.status %>
 <%= order.email %>
 <% end %>
 </body>

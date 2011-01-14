@@ -4,8 +4,8 @@ require 'lib/store'
 class CreateUsers < ActiveRecord::Migration
   def self.up
     create_table :users do |t|
-      t.string :username, :required => true, :limit => 40
-      t.string :password, :required => true, :limit => 40
+      t.string :username, :null => false, :limit => 40
+      t.string :password, :null => false, :limit => 40
     end
  
     User.create({ :username => "Steph",

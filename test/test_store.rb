@@ -1,10 +1,12 @@
-require 'store'
+require 'active_record'
+require 'lib/store'
 require 'test/unit'
 require 'rack/test'
+require 'my_store'
 
 ENV['RACK_ENV'] = 'development'
 
-class StoreTests < Test::Unit::TestCase
+class Tests < Test::Unit::TestCase
   include Rack::Test::Methods
 
   def app

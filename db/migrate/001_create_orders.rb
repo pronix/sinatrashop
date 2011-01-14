@@ -1,23 +1,22 @@
 class CreateOrders < ActiveRecord::Migration
   def self.up
     create_table :orders do |t|
-      t.string   "email"
-      t.string   "bill_firstname"
-      t.string   "bill_lastname"
-      t.string   "bill_address1"
-      t.string   "bill_address2"
-      t.string   "bill_city"
-      t.integer  "bill_state"
-      t.string   "bill_zipcode"
-      t.string   "ship_firstname"
-      t.string   "ship_lastname"
-      t.string   "ship_address1"
-      t.string   "ship_address2"
-      t.string   "ship_city"
-      t.integer  "ship_state"
-      t.string   "ship_zipcode"
-      t.string   "phone"
-      t.string   "status", :default => "pending"
+      t.string   :email, :null => false
+      t.string   :bill_firstname, :null => false
+      t.string   :bill_lastname, :null => false
+      t.string   :bill_address1, :null => false
+      t.string   :bill_address2
+      t.string   :bill_city, :null => false
+      t.integer  :bill_state, :null => false
+      t.string   :bill_zipcode, :null => false
+      t.string   :ship_firstname, :null => false
+      t.string   :ship_lastname, :null => false
+      t.string   :ship_address1, :null => false
+      t.string   :ship_address2
+      t.string   :ship_city, :null => false
+      t.integer  :ship_state, :null => false
+      t.string   :ship_zipcode, :null => false
+      t.string   :phone, :null => false
       t.timestamps
     end
   end

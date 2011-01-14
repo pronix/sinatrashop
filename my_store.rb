@@ -32,7 +32,6 @@ post '/' do
            # Authorize for $10 dollars (1000 cents) 
            response = gateway.authorize(1000, credit_card)
            if response.success?
-             order.update_attribute(:status, "complete")
              gateway.capture(1000, response.authorization)
              @message = 'Success!'
              @success = true

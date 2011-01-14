@@ -2,7 +2,17 @@ require 'sinatra'
 require 'erb'
 require 'active_record'
 require 'configuration'
-require 'models/order'
+require 'lib/store'
+
+helpers do
+  include Store::Authorization
+end
+
+get '/admin' do
+  require_administrative_privileges
+  @orders = Order.all
+  erb :admin
+end
 
 get '/' do
   erb :index, :locals => { :params => { :credit_card => {}, :order => {} } }
@@ -20,7 +30,7 @@ post '/' do
            gateway = ActiveMerchant::Billing::AuthorizeNetGateway.new(settings.authorize_credentials)
 
            # Authorize for $10 dollars (1000 cents) 
-           response = gateway.authorize(1000, credit_card, :address => order.avs_address)
+           response = gateway.authorize(1000, credit_card)
            if response.success?
              gateway.capture(1000, response.authorization)
              @message = 'Success!'

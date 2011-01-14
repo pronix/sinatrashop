@@ -13,7 +13,7 @@
 <img src="/images/book.png" class="product" />
 
 <div class="buy">
-  <% if success == 1 %>
+  <% if @success %>
   <div class="center">
   <img src="/images/success.png" class="success" />
   </div>
@@ -22,7 +22,7 @@
     <img src="/images/buyitnow.png" class="buyitnow" />
   </div>
   <div class="error">
-  <%= response.to_s %>
+    <%= @message %>
   </div>
   <form action="/" method="post">
     <table width="100%" cellpadding="0" cellspacing="0">

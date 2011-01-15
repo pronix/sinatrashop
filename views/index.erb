@@ -10,7 +10,16 @@
     
 <body>
 
-<img src="/images/book.png" class="product" />
+<div class="products">
+<% @products.each do |product| %>
+<div class="product">
+<%= product.name %>
+<%= product.description %>
+<%= product.price %>
+<input type="radio" name="product_id" value="<%= product.id %>" />
+</div>
+<% end %>
+</div>
 
 <div class="buy">
   <% if @success %>

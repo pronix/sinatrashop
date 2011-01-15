@@ -32,7 +32,7 @@ post '/' do
            gateway = ActiveMerchant::Billing::AuthorizeNetGateway.new(settings.authorize_credentials)
 
            # Authorize for $10 dollars (1000 cents) 
-           response = gateway.authorize(1000, credit_card)
+           response = gateway.authorize(order.product.price*100, credit_card)
            if response.success?
              gateway.capture(1000, response.authorization)
              @message = 'Success!'

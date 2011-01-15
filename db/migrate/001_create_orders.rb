@@ -17,6 +17,7 @@ class CreateOrders < ActiveRecord::Migration
       t.integer  :ship_state, :null => false
       t.string   :ship_zipcode, :null => false
       t.string   :phone, :null => false
+      t.references :product, :null => false
       t.timestamps
     end
   end

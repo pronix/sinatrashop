@@ -15,10 +15,12 @@ get '/admin' do
 end
 
 get '/' do
+  @products = Product.all
   erb :index, :locals => { :params => { :credit_card => {}, :order => {} } }
 end
   
 post '/' do
+  @products = Product.all
   begin
     order = Order.new(params[:order])
     ActiveRecord::Base.transaction do

@@ -13,3 +13,6 @@ div.buy { float: right; width: 69%; }
 div.center { width: 100%; text-align: center; }
 img.success { margin-top: 150px; }
 input.submit { width: 200px; margin-top: 10px; }
+
+div.products { float: left; width: 29%; }
+div.product { font-size: 20px; }

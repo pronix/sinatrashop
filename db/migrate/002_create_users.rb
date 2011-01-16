@@ -1,5 +1,5 @@
 require 'digest/sha1'
-require 'lib/store'
+require 'lib/model/user'
 
 class CreateUsers < ActiveRecord::Migration
   def self.up

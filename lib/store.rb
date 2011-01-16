@@ -2,6 +2,8 @@ module Store
   instance_eval do
     def load_dependencies!
       require "lib/authorization.rb"
+      require "lib/configuration.rb"
+      require "lib/admin.rb"
     end
 
     # Loads up any and all model classes in this namespace.

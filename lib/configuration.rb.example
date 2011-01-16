@@ -1,0 +1,22 @@
+require 'sinatra/base'
+require 'active_merchant'
+
+module Sinatra
+  module Configuration
+    def self.registered(app)
+      app.set :public, File.dirname( __FILE__ ) + '/../public' 
+
+      app.set :authorize_credentials => {
+        :login => "LOGIN"
+        :password => "PASSWORD"
+      }
+      ActiveRecord::Base.establish_connection(
+        :adapter => 'sqlite3',
+        :database =>  'db/development.sqlite3.db'
+      )
+      ActiveMerchant::Billing::Base.mode = :test
+    end
+  end 
+
+  register Configuration
+end

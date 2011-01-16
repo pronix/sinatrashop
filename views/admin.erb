@@ -5,26 +5,22 @@
   <title>Locate Express | Coming Soon</title>
   <meta name="description" content="Locate Express" />
   <meta name="keywords" content="Locate Express" />
-  <link href="/stylesheets/style.css" media="screen" rel="stylesheet" type="text/css" />
+  <link href="/stylesheets/admin.css" media="screen" rel="stylesheet" type="text/css" />
+  <script type="text/javascript" src="http://yui.yahooapis.com/3.2.0/build/yui/yui.js"></script>
+  <script type="text/javascript" src="/javascripts/admin/base.js"></script>
+  <script type="text/javascript" src="/javascripts/admin/order.js"></script>
+  <script type="text/javascript" src="/javascripts/admin/product.js"></script>
 </head>
     
 <body>
 
-Admin!
-<% @orders.each do |order| %>
-<h2>Order #<%= order.id %></h2>
-<%= order.bill_firstname %> <%= order.bill_lastname %><br />
-<%= order.bill_address1 %><br />
-<%= order.bill_address2 + '<br />' if !order.bill_address2.blank? %>
-<%= order.bill_city %> <%= order.bill_state %>, <%= order.bill_zipcode %><br />
-<%= order.ship_firstname %> <%= order.ship_lastname %><br />
-<%= order.ship_address1 %><br />
-<%= order.ship_address2 + '<br />' if !order.ship_address2.blank? %>
-<%= order.ship_city %> <%= order.ship_state %>, <%= order.ship_zipcode %><br />
-<%= order.phone %>
-<%= order.email %>
-<%= order.product.name %>
-<%= order.product.price %>
-<% end %>
+<div class="left">
+<!-- build tabs here -->
+</div>
+<div class="message"></div>
+<div class="right">
+<!-- build content here -->
+</div>
+
 </body>
 </html>

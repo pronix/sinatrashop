@@ -7,13 +7,14 @@ class MyStore < Sinatra::Base
   register Sinatra::Admin
   register Sinatra::Authorization
   register Sinatra::Configuration
+  register Sinatra::StoreCart
   
   get '/' do
     @products = Product.all
     erb :index, :locals => { :params => { :credit_card => {}, :order => {} } }
   end
     
-  post '/' do
+  post '/cart' do
     @products = Product.all
     begin
       order = Order.new(params[:order])
@@ -44,7 +45,7 @@ class MyStore < Sinatra::Base
       @message = e.message 
     end
   
-    erb :index
+    erb :cart
   end
   
   run! if app_file == $0

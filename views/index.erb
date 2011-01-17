@@ -11,6 +11,7 @@
 </head>
     
 <body>
+<<<<<<< HEAD
 
 <div id="header">
 <img id="logo" src="/images/cupcakes.png" />
@@ -157,5 +158,22 @@
 <% end %>
 
 <div id="footer"></div>
+=======
+<a href="/cart">Your Cart</a>
+  <div class="products">
+    <% @products.each do |product| %>
+    <form action="/cart/add" method="post">
+    <div class="product">
+    <%= product.name %>
+    <%= product.description %>
+    <%= price_display(product.price) %>
+    <input type="radio" name="product_id" value="<%= product.id %>" />
+    <input type="text" name="quantity" value="1" />
+    <input type="submit" value="ADD!" />
+    </div>
+    </form>
+    <% end %>
+  </div>
+>>>>>>> Basic Cart functionality.
 </body>
 </html>

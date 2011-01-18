@@ -17,4 +17,5 @@ class Order < ActiveRecord::Base
   validates_presence_of :product_id
 
   belongs_to :product
+  has_many :orderlines
 end

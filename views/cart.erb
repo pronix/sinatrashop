@@ -11,17 +11,17 @@
 <body>
 
 <form action="/cart/update" method="post">
-<% @cart.items.each do |item| %>
-Item: <%= item.quantity %>
-<%= item.product.name %> 
-<input type="text" name="quantity[<%= item.product.id %>]" value="<%= item.quantity %>" />
-<a href="/cart/remove/<%= item.product.id %>">Remove</a>
+<% @cart.each do |item| %>
+Item: <%= item[:quantity] %>
+<%= item[:product].name %> 
+<input type="text" name="quantity[<%= item[:product].id %>]" value="<%= item[:quantity] %>" />
+<% if false %><a href="/cart/remove/<%= item[:product].id %>">Remove</a><% end %>
 <br /><br />
 <% end %>
 <input type="submit" value="Update Cart" />
 </form>
 
-<%= price_display(@cart.total) %>
+<%= price_display(@total) %>
 <a href="/cart/clear">Clear Cart!</a>
 
 <form action="/" method="post">

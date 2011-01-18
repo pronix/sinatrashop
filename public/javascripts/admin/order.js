@@ -13,7 +13,7 @@ functions.order = {
 			+ order.ship_firstname + ' ' + order.ship_lastname + '<br />'
 			+ order.ship_address1 + ' ' + order.ship_address2 + '<br />'
 			+ order.ship_city + ' ' + order.ship_state + ', ' + order.ship_zipcode + '<br />'
-			+ 'Product: ' + order.product_id;
+			+ 'Total: ' + order.total;
 		return inner_html;
 	},
 	empty: function() {

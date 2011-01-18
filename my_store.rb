@@ -15,31 +15,35 @@ class MyStore < Sinatra::Base
   end
     
   post '/cart' do
-# create orderline entries, references order id and product id and has quantity which is a non-negative integer
-# orderline constraints on product and orders
-# modify here to create orderlines tied to order from cart, clear self.items if successful
-# modify orders to contain total price, update authorization amount to total
-# update admin to show orderlines
-
     @products = Product.all
     begin
-      order = Order.new(params[:order])
       ActiveRecord::Base.transaction do
+        order = Order.new(params[:order])
         if order.save
+          cart = Cart.build_cart(request.cookies["cart"])
+          total = 0
+          cart.each do |item|
+            Orderline.create({ :order_id => order.id,
+              :product_id => item[:product].id,
+              :price => item[:product].price,
+              :quantity => item[:quantity] })
+            total += item[:product].price*item[:quantity]
+          end
+          order.update_attribute(:total, total)
           params[:credit_card][:first_name] = params[:order][:bill_firstname]
           params[:credit_card][:last_name] = params[:order][:bill_lastname]
           credit_card = ActiveMerchant::Billing::CreditCard.new(params[:credit_card])
           if credit_card.valid?
              gateway = ActiveMerchant::Billing::AuthorizeNetGateway.new(settings.authorize_credentials)
-  
+ 
              # Authorize for $10 dollars (1000 cents) 
-             response = gateway.authorize(order.product.price*100, credit_card)
-             if response.success?
-               gateway.capture(1000, response.authorization)
-               @message = 'Success!'
+             gateway_response = gateway.authorize(order.total*100, credit_card)
+             if gateway_response.success?
+               gateway.capture(1000, gateway_response.authorization)
+               response.set_cookie("cart", Cart.clear)
                @success = true
              else
-               raise Exception, response.message
+               raise Exception, gateway_response.message
              end
            else
              raise Exception, "Your credit card was not valid."
@@ -52,6 +56,8 @@ class MyStore < Sinatra::Base
       @message = e.message 
     end
   
+    @cart = Cart.build_cart(request.cookies["cart"])
+    @total = @cart.sum { |item| item[:quantity]*item[:product].price }
     erb :cart
   end
   

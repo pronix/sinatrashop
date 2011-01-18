@@ -17,7 +17,7 @@
     <%= product.name %>
     <%= product.description %>
     <%= price_display(product.price) %>
-    <input type="radio" name="product_id" value="<%= product.id %>" />
+    <input type="hidden" name="product_id" value="<%= product.id %>" />
     <input type="text" name="quantity" value="1" />
     <input type="submit" value="ADD!" />
     </div>

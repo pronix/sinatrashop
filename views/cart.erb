@@ -10,6 +10,11 @@
     
 <body>
 
+<% if @success %>
+<div class="center">
+<img src="/images/success.png" class="success" />
+</div>
+<% else %>
 <form action="/cart/update" method="post">
 <% @cart.each do |item| %>
 Item: <%= item[:quantity] %>
@@ -24,13 +29,8 @@ Item: <%= item[:quantity] %>
 <%= price_display(@total) %>
 <a href="/cart/clear">Clear Cart!</a>
 
-<form action="/" method="post">
+<form action="/cart" method="post">
 <div class="buy">
-  <% if @success %>
-  <div class="center">
-  <img src="/images/success.png" class="success" />
-  </div>
-  <% else %>
   <div class="center">
     <img src="/images/buyitnow.png" class="buyitnow" />
   </div>
@@ -142,8 +142,9 @@ Item: <%= item[:quantity] %>
     <div class="center">
       <input type="image" src="/images/submit.png" value="Submit" class="submit" />
     </div>
-  <% end %>
 </div>
 </form>
+<% end %>
+
 </body>
 </html>

@@ -3,11 +3,6 @@ require 'sinatra/base'
 module Sinatra  
   module StoreCart
     module Helpers
-      def get_cart
-        session[:cart] ||= Cart.new
-        session[:cart]
-      end
-
       def price_display(price)
         d = price.to_f.to_s.split('.')
         dec = d[1]
@@ -25,31 +20,29 @@ module Sinatra
     def self.registered(app)
       app.helpers StoreCart::Helpers
 
-      app.set :sessions, true
-
       app.get '/cart' do
-        @cart = get_cart
+        @cart = Cart.build_cart(request.cookies["cart"])
+        @total = @cart.sum { |item| item[:quantity]*item[:product].price }
         erb :cart, :locals => { :params => { :order => {}, :credit_card => {} }}
       end
 
       app.post '/cart/add' do
-        get_cart.add(params)
+        response.set_cookie("cart", Cart.add(request.cookies["cart"], params))
         redirect "/cart"
       end
 
       app.post '/cart/update' do
-        get_cart.update(params)
+        response.set_cookie("cart", Cart.update(request.cookies["cart"], params))
         redirect "/cart"
       end
 
-      #perhaps change this to post later?
       app.get '/cart/remove/:product_id' do |product_id|
-        get_cart.remove(product_id)
+        response.set_cookie("cart", Cart.remove(request.cookies["cart"], product_id))
         redirect "/cart"
       end
       
       app.get '/cart/clear' do
-        get_cart.clear
+        response.set_cookie("cart", Cart.clear)
         redirect "/cart"
       end
     end

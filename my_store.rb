@@ -15,6 +15,12 @@ class MyStore < Sinatra::Base
   end
     
   post '/cart' do
+# create orderline entries, references order id and product id and has quantity which is a non-negative integer
+# orderline constraints on product and orders
+# modify here to create orderlines tied to order from cart, clear self.items if successful
+# modify orders to contain total price, update authorization amount to total
+# update admin to show orderlines
+
     @products = Product.all
     begin
       order = Order.new(params[:order])

@@ -24,7 +24,6 @@ var render_display_node = function(item, type) {
 		.append(delete_link(item))
 		.append(edit_link(item));
 };
-
 var new_link = function() {
 	return $(document.createElement('a'))
 		.html('New')

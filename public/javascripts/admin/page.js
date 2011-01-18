@@ -9,9 +9,8 @@ functions.page = {
 			+ '<textarea name="content">' + page.content + '</textarea></p>';
 	},
 	content: function(page) {
-		var inner_html = '<h4>Page: ' + page.slug + '</h4>'
+		return '<h4>Page: ' + page.slug + '</h4>'
 			+ 'Title: ' + page.title + ' (' + page.slug + ')<br />';
-		return inner_html;
 	},
 	empty: function() {
 		return { title: '', slug: '', content: '' };	

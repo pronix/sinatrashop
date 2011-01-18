@@ -10,6 +10,9 @@ module Sinatra
 
       app.get '/:slug' do |slug|
         @page = Page.find_by_slug(slug)
+        unless @page
+          redirect '/'
+        end
         @title = @page.title + ' | ' + settings.store_title
         erb :page
       end

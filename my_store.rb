@@ -8,6 +8,11 @@ class MyStore < Sinatra::Base
   register Sinatra::Authorization
   register Sinatra::Configuration
   register Sinatra::StoreCart
+  register Sinatra::StorePages
+
+  before do
+    @title = settings.store_title
+  end
   
   get '/' do
     @products = Product.all

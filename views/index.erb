@@ -1,14 +1,5 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<%= erb :header %>
 
-<head>
-  <title>My Store</title>
-  <meta name="description" content="My Store" />
-  <meta name="keywords" content="My Store" />
-  <link href="/stylesheets/style.css" media="screen" rel="stylesheet" type="text/css" />
-</head>
-    
-<body>
 <a href="/cart">Your Cart</a>
   <div class="products">
     <% @products.each do |product| %>
@@ -24,5 +15,5 @@
     </form>
     <% end %>
   </div>
-</body>
-</html>
+
+<%= erb :footer %>

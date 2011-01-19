@@ -16,3 +16,7 @@ input.submit { width: 200px; margin-top: 10px; }
 
 div.products { float: left; width: 29%; }
 div.product { font-size: 20px; }
+
+p.dynamo { clear: both; }
+p.dynamo label { } 
+p.dynamo input { } 

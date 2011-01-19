@@ -5,8 +5,9 @@
 <img src="/images/success.png" class="success" />
 </div>
 <% else %>
+
 <form action="/cart/update" method="post">
-<% @cart.each do |item| %>
+<% @cart.items.each do |item| %>
 Item: <%= item[:quantity] %>
 <%= item[:product].name %> 
 <input type="text" name="quantity[<%= item[:product].id %>]" value="<%= item[:quantity] %>" />
@@ -16,7 +17,7 @@ Item: <%= item[:quantity] %>
 <input type="submit" value="Update Cart" />
 </form>
 
-<%= price_display(@total) %>
+<%= price_display(@cart.total) %>
 <a href="/cart/clear">Clear Cart!</a>
 
 <form action="/cart" method="post">
@@ -118,16 +119,20 @@ Item: <%= item[:quantity] %>
           </p>
           <p>
             <label>state:</label>
-            <select name="[order]ship_state">
+            <select name="[order]ship_state" class="shipping">
             <%= erb :states, :locals => { :field => "ship_state", :params => params } %>
             </select>
           </p>
           <p>
             <label>zip:</label>
-            <input type="text" name="[order]ship_zipcode" value="<%= params[:order][:ship_zipcode].to_s %>" />
+            <input type="text" name="[order]ship_zipcode" value="<%= params[:order][:ship_zipcode].to_s %>" class="shipping" />
           </p>
         </td>
       </tr>
+      <tr><td colspan="2" id="shipping_methods">
+	<a href="#" id="update_shipping">Update Shipping</a>
+        <h3>Shipping Methods</h3>
+      </td></tr>
     </table>
     <div class="center">
       <input type="image" src="/images/submit.png" value="Submit" class="submit" />

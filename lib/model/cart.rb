@@ -1,10 +1,13 @@
 class Cart
-  def self.build_cart(cookie)
-    cart = []
+  attr_accessor :items
+  attr_accessor :total
+
+  def initialize(cookie)
+    self.items = []
     cookie.split(';').each do |item|
-      cart << { :product => Product.find(item.split(':')[0]), :quantity => (item.split(':')[1]).to_i }
+      self.items << { :product => Product.find(item.split(':')[0]), :quantity => (item.split(':')[1]).to_i }
     end
-    cart
+    self.total = self.items.sum { |item| item[:quantity]*item[:product].price }
   end
 
   def self.to_hash(cookie)

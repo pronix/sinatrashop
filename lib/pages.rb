@@ -1,12 +1,12 @@
 require 'sinatra/base'
 
 module Sinatra  
-  module StorePages
+  module Pages
     module Helpers
     end
   
     def self.registered(app)
-      app.helpers StorePages::Helpers
+      app.helpers Pages::Helpers
 
       app.get '/:slug' do |slug|
         @page = Page.find_by_slug(slug)

@@ -24,6 +24,7 @@ var render_display_node = function(item, type) {
 		.append(delete_link(item))
 		.append(edit_link(item));
 };
+
 var new_link = function() {
 	return $(document.createElement('a'))
 		.html('New')
@@ -174,3 +175,4 @@ var display_content = function(node) {
 var notify = function(message) {
 	$('td.message').html(message);
 };
+

@@ -1,2 +1,2 @@
-require 'my_store'
-run MyStore
+require 'store'
+run Store

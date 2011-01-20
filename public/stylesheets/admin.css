@@ -17,5 +17,6 @@ td.left { }
   td.left a.selected:hover { color: #FFF; }
 td.message { padding-left: 10px; color: red; font-size: 14px; }
 td.right { padding-left: 20px; }
-  td.right div { padding: 6px 0px; }
+  td.right div { padding: 6px; }
+  td.right div.odd { background: #f1d6d6; }
   td.right div a { padding-right: 10px; }

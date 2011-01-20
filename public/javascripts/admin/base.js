@@ -3,7 +3,9 @@ var items = {};
 
 $(function() {
 	$.each(functions, function(e, i) {
-		var nav_node = $('<a href="#">' + e.charAt(0).toUpperCase() + e.slice(1) + 's</a>')
+		var display = e.charAt(0).toUpperCase() + e.slice(1);
+		var display = display.replace('_', ' ');
+		var nav_node = $('<a href="#">' + display + 's</a>')
 			.attr('id', e)
 			.click(function() {
 				$('td.left a').not(this).removeClass('selected');
@@ -18,7 +20,7 @@ var render_display_node = function(item, type) {
 	var content = functions[type].content(item);
 	return $(document.createElement('div'))
 		.html(content)
-		.addClass("item" + item.id)
+		.attr('id', "item" + item.id)
 		.append(delete_link(item))
 		.append(edit_link(item));
 };
@@ -32,7 +34,7 @@ var new_link = function() {
 };
 var update_link = function(item) {
 	return $(document.createElement('a'))
-		.html('Update Product')
+		.html('Update')
 		.attr('href', '#')
 		.addClass("item" + item.id)
 		.click(function() { update_item(this); });
@@ -63,7 +65,7 @@ var update_item = function(node) {
 	var type = $('td.left a.selected').attr('id');
 	var item = items[$(node).attr('class')]; 
 	var data = {};
-	$('div.item' + item.id + ' input, div.item' + item.id + ' textarea').each(function(i, j) {
+	$('div#item' + item.id + ' input, div#item' + item.id + ' textarea').each(function(i, j) {
 		data[$(j).attr('name')] = $(j).val();
 	});
 	$.ajax({
@@ -75,12 +77,12 @@ var update_item = function(node) {
 		},
 		success: function(data) {
 			var item = data[type];
-			if($('td.right div.item' + item.id).length == 0) {
-				$('td.right div.itemnew').replaceWith(render_display_node(item, type));
+			if($('td.right div#item' + item.id).length == 0) {
+				$('td.right div#itemnew').replaceWith(render_display_node(item, type));
 				notify('Created');
 				$('td.right').append(new_link());
 			} else {
-				$('td.right div.item' + item.id).replaceWith(render_display_node(item, type));
+				$('td.right div#item' + item.id).replaceWith(render_display_node(item, type));
 				notify('updated');
 			}
 			items["item" + item.id] = item;
@@ -97,7 +99,7 @@ var close_item = function(node) {
 	var type = $('td.left a.selected').attr('id');
 	var item = items[$(node).attr('class')]; 
 	var content = functions[type].content(item);
-	$('td.right div.item' + item.id).replaceWith(render_display_node(item, type));
+	$('td.right div#item' + item.id).replaceWith(render_display_node(item, type));
 };
 
 var delete_item = function(node) {
@@ -110,7 +112,7 @@ var delete_item = function(node) {
 			notify('<img src="/images/ajax-loader.gif" alt="working..." />');
 		},
 		success: function(data) {
-			$('td.right div.item' + item.id).remove();
+			$('td.right div#item' + item.id).remove();
 			notify('deleted');
 		},
 		dataType: "json",
@@ -125,7 +127,7 @@ var edit_item = function(node) {
 	var type = $('td.left a.selected').attr('id');
 	var item = items[$(node).attr('class')]; 
 	var content = functions[type].edit(item);
-	var enode = $('div.item' + item.id).html(content);
+	var enode = $('div#item' + item.id).html(content);
 	enode.append(update_link(item));
 	enode.append(close_link(item));
 };
@@ -159,6 +161,7 @@ var display_content = function(node) {
 				$('td.right').append(render_display_node(item, type));
 			});
 			$('td.right').append(new_link());
+			$('td.right div:odd').addClass('odd');
 			notify('');
 		},
 		dataType: "json",

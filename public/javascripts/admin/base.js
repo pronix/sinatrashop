@@ -1,186 +1,174 @@
 var functions = {};
 var items = {};
 
-YUI().use("node", "io", "json", function(Y) {
-	var render_display_node = function(item, type) {
-		var content = functions[type].content(item);
-		var display_node = Y.Node.create('<div></div>')
-			.set('innerHTML', content)
-			.addClass("item" + item.id);
-		display_node.append(edit_link(item));
-		display_node.append(delete_link(item));
-		return display_node;
-	};
-	var new_link = function() {
-		var new_link_node = Y.Node.create('<a href="#">New</a>').addClass('new');;
-		Y.on('click', function() { new_item(); }, new_link_node);
-		return new_link_node;	
-	};
-	var update_link = function(item) {
-		var update_link_node = Y.Node.create('<a href="#">Submit</a>').addClass(item.id);
-		Y.on('click', Y.bind(update_item, item), update_link_node);
-		return update_link_node;	
-	};
-	var close_link = function(item) {
-		var close_link_node = Y.Node.create('<a href="#">X</a>').addClass(item.id);
-		Y.on('click', Y.bind(close_item, item), close_link_node);
-		return close_link_node;	
-	};
-	var delete_link = function(item) {
-		var delete_link_node = Y.Node.create('<a href="#">Delete</a>').addClass(item.id);
-		Y.on('click', Y.bind(delete_item, item), delete_link_node);
-		return delete_link_node;	
-	};
-	var edit_link = function(item) {
-		var edit_link_node = Y.Node.create('<a href="#">Edit</a>').addClass(item.id);
-		Y.on('click', Y.bind(edit_item, item), edit_link_node);
-		return edit_link_node;	
-	};
-
-	var update_item = function(e) {
-		var type = Y.one('div.left a.selected').getAttribute('id');
-		var node = e.currentTarget;
-		var item = items["item" + node.getAttribute('class')]; 
-		var config = { 
-			method: 'POST',
-   			headers: { 'Content-Type': 'application/json' },
-			on: {
-				success: Y.bind(function(oId, o) {
-					var data = Y.JSON.parse(o.responseText);
-					var item = data[type];
-					if(Y.all('div.right div.item' + item.id).isEmpty()) {
-						Y.one('div.right div.itemnew').replace(render_display_node(item, type));
-						notify('created');
-						Y.one('div.right').append(new_link());
-					} else {
-						Y.one('div.right div.item' + item.id).replace(render_display_node(item, type));
-						notify('updated');
-					}
-					items["item" + item.id] = item;
-				}),
-				start: Y.bind(function(oId, o) {
-					notify('<img src="/images/ajax-loader.gif" alt="working..." />');
-				}),
-				failure: Y.bind(function(oId, o) {
-					if(o.responseText !== undefined){
-						var errors = Y.JSON.parse(o.responseText);
-						notify('<ul><li>' + errors.join('</li><li>') + '</li></ul>');
-					}
-				})
-			}
-   		};
-		var data = {}; 
-		Y.each(
-			Y.all('div.item' + item.id + ' input'), 
-			function(e, i, a) {
-				data[e.getAttribute('name')] = e.get('value');
-			},
-		this);
-		config.data = Y.JSON.stringify(data);
-
-		Y.io("/admin/" + type + "/" + item.id, config);
-	};
-	var close_item = function(e) {
-		var type = Y.one('div.left a.selected').getAttribute('id');
-		var node = e.currentTarget;
-		var item = items["item" + node.getAttribute('class')]; 
-		var content = functions[type].content(item);
-		Y.one('div.right div.item' + item.id).replace(render_display_node(item, type));
-	};
-	var delete_item = function(e) {
-		var type = Y.one('div.left a.selected').getAttribute('id');
-		var node = e.currentTarget;
-		var item = items["item" + node.getAttribute('class')]; 
-		var config = { 
-			method: 'DELETE',
-   			headers: { 'Content-Type': 'application/json' },
-			on: {
-				success: Y.bind(function(oId, o) {
-					Y.one('div.right div.item' + item.id).remove();
-					notify('deleted');
-				}),
-				start: Y.bind(function(oId, o) {
-					notify('<img src="/images/ajax-loader.gif" alt="working..." />');
-				}),
-				failure: Y.bind(function(oId, o) {
-					if(o.responseText !== undefined){
-						var errors = Y.JSON.parse(o.responseText);
-						notify('<ul><li>' + errors.join('</li><li>') + '</li></ul>');
-					}
-				})
-			}
-   		};
-		Y.io("/admin/" + type + "/" + item.id, config);
-	};
-	var edit_item = function(e) {
-		var type = Y.one('div.left a.selected').getAttribute('id');
-		var node = e.currentTarget;
-		var item = items["item" + node.getAttribute('class')]; 
-		var content = functions[type].edit(item);
-		var node = Y.one('div.item' + item.id).set('innerHTML', content);
-		node.append(update_link(item));
-		node.append(close_link(item));
-	};
-	var new_item = function() {
-		var type = Y.one('div.left a.selected').getAttribute('id');
-		var item = functions[type].empty();
-		item.id = "new";
-		items["itemnew"] = item;
-		var content = functions[type].edit(item);
-		var node = Y.Node.create('<div></div>')
-			.addClass('itemnew')
-			.set('innerHTML', content);
-		Y.one('div.right a.new').replace(node);
-		node.append(update_link(item));
-		node.append(close_link(item));
-	};
-
-	var display_content = function(e) {
-		var type = e.getAttribute('id');
-		var config = { 
-			method: 'GET',
-   			headers: { 'Content-Type': 'application/json' },
-			on: {
-				success: Y.bind(function(oId, o) {
-					var data = Y.JSON.parse(o.responseText);
-					items = {};
-					Y.one('div.right').set('innerHTML', '');
-					Y.each(data, function(point, i, a) {
-						var item = point[type]
-						Y.one('div.right').append(render_display_node(item, type));
-						items["item" + item.id] = item;
-					});
-					Y.one('div.right').append(new_link());
-					notify('');
-				}),
-				start: Y.bind(function(oId, o) {
-					notify('<img src="/images/ajax-loader.gif" alt="working..." />');
-				}),
-				failure: Y.bind(function(oId, o) {
-					if(o.responseText !== undefined){
-						var errors = Y.JSON.parse(o.responseText);
-						notify('<ul><li>' + errors.join('</li><li>') + '</li></ul>');
-					}
-				})
-			}
-   		};
-		Y.io("/admin/" + type, config);
-	};
-
-	var notify = function(message) {
-		Y.one('div.message').set('innerHTML', message);
-	};
-
-	Y.on('domready', function() {
-		Y.each(functions, function(e, i, a) {
-			var nav_node = Y.Node.create('<a href="#">' + i + '</a>').setAttribute('id', i);
-			Y.on('click', Y.bind(function(b) {
-				var node = b.currentTarget;
-				Y.all('div.left a').removeClass('selected');
-				node.addClass('selected');
-				display_content(node);
-			}, this), nav_node); 
-			Y.one('div.left').append(nav_node); 
-		});
+$(function() {
+	$.each(functions, function(e, i) {
+		var nav_node = $('<a href="#">' + e.charAt(0).toUpperCase() + e.slice(1) + 's</a>')
+			.attr('id', e)
+			.click(function() {
+				$('td.left a').not(this).removeClass('selected');
+				$(this).addClass('selected');
+				display_content(this); 
+			});
+		$('td.left').append(nav_node); 
 	});
 });
+
+var render_display_node = function(item, type) {
+	var content = functions[type].content(item);
+	return $(document.createElement('div'))
+		.html(content)
+		.addClass("item" + item.id)
+		.append(delete_link(item))
+		.append(edit_link(item));
+};
+
+var new_link = function() {
+	return $(document.createElement('a'))
+		.html('New')
+		.attr('href', '#')
+		.addClass('new')
+		.click(function() { new_item(this); });
+};
+var update_link = function(item) {
+	return $(document.createElement('a'))
+		.html('Update Product')
+		.attr('href', '#')
+		.addClass("item" + item.id)
+		.click(function() { update_item(this); });
+};
+var close_link = function(item) {
+	return $(document.createElement('a'))
+		.html('Cancel Edit')
+		.attr('href', '#')
+		.addClass("item" + item.id)
+		.click(function() { close_item(this); });
+};
+var delete_link = function(item) {
+	return $(document.createElement('a'))
+		.html('Delete')
+		.attr('href', '#')
+		.addClass("item" + item.id)
+		.click(function() { delete_item(this); });
+};
+var edit_link = function(item) {
+	return $(document.createElement('a'))
+		.html('Edit')
+		.attr('href', '#')
+		.addClass("item" + item.id)
+		.click(function() { edit_item(this) });
+};
+
+var update_item = function(node) {
+	var type = $('td.left a.selected').attr('id');
+	var item = items[$(node).attr('class')]; 
+	var data = {};
+	$('div.item' + item.id + ' input, div.item' + item.id + ' textarea').each(function(i, j) {
+		data[$(j).attr('name')] = $(j).val();
+	});
+	$.ajax({
+		type: "POST",
+		url: "/admin/" + type + "/" + item.id,
+		data: JSON.stringify(data),
+		beforeSend: function(xhr, i) {
+			notify('<img src="/images/ajax-loader.gif" alt="working..." />');
+		},
+		success: function(data) {
+			var item = data[type];
+			if($('td.right div.item' + item.id).length == 0) {
+				$('td.right div.itemnew').replaceWith(render_display_node(item, type));
+				notify('Created');
+				$('td.right').append(new_link());
+			} else {
+				$('td.right div.item' + item.id).replaceWith(render_display_node(item, type));
+				notify('updated');
+			}
+			items["item" + item.id] = item;
+		},
+		dataType: "json",
+		error: function(xhr, i, b) {
+			var data = $.parseJSON(xhr.responseText);
+			notify('<ul><li>' + data.join('</li><li>') + '</li></ul>');
+		} 
+	});
+};
+
+var close_item = function(node) {
+	var type = $('td.left a.selected').attr('id');
+	var item = items[$(node).attr('class')]; 
+	var content = functions[type].content(item);
+	$('td.right div.item' + item.id).replaceWith(render_display_node(item, type));
+};
+
+var delete_item = function(node) {
+	var type = $('td.left a.selected').attr('id');
+	var item = items[$(node).attr('class')];
+	$.ajax({
+		type: "DELETE",
+		url: "/admin/" + type + "/" + item.id,
+		beforeSend: function(xhr, i) {
+			notify('<img src="/images/ajax-loader.gif" alt="working..." />');
+		},
+		success: function(data) {
+			$('td.right div.item' + item.id).remove();
+			notify('deleted');
+		},
+		dataType: "json",
+		error: function(xhr, i, b) {
+			var data = $.parseJSON(xhr.responseText);
+			notify('<ul><li>' + data.join('</li><li>') + '</li></ul>');
+		} 
+	});
+};
+
+var edit_item = function(node) {
+	var type = $('td.left a.selected').attr('id');
+	var item = items[$(node).attr('class')]; 
+	var content = functions[type].edit(item);
+	var enode = $('div.item' + item.id).html(content);
+	enode.append(update_link(item));
+	enode.append(close_link(item));
+};
+var new_item = function() {
+	var type = $('td.left a.selected').attr('id');
+	var item = functions[type].empty();
+	item.id = "new";
+	items["itemnew"] = item;
+	var content = functions[type].edit(item);
+	var node = $(document.createElement('div'))
+		.addClass('itemnew')
+		.html(content)
+		.append(update_link(item))
+		.append(close_link(item));
+	$('td.right a.new').replaceWith(node);
+};
+
+var display_content = function(node) {
+	var type = $(node).attr('id');
+	$.ajax({
+		url: "/admin/" + type,
+		beforeSend: function(xhr, i) {
+			notify('<img src="/images/ajax-loader.gif" alt="working..." />');
+		},
+		success: function(data) {
+			items = {};
+			$('td.right').html('');
+			$.each(data, function(i, point) {
+				var item = point[type]
+				items["item" + item.id] = item;
+				$('td.right').append(render_display_node(item, type));
+			});
+			$('td.right').append(new_link());
+			notify('');
+		},
+		dataType: "json",
+		error: function(xhr, i, b) {
+			var data = $.parseJSON(xhr.responseText);
+			notify('<ul><li>' + data.join('</li><li>') + '</li></ul>');
+		} 
+	});
+};
+
+var notify = function(message) {
+	$('td.message').html(message);
+};

@@ -17,7 +17,6 @@ module Sinatra
 
       app.get '/admin' do
         require_administrative_privileges
-        @orders = [] #Order.all
         erb :admin
       end
     

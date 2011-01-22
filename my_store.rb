@@ -29,7 +29,6 @@ class MyStore < Sinatra::Base
              response = gateway.authorize(order.product.price*100, credit_card)
              if response.success?
                gateway.capture(1000, response.authorization)
-               @message = 'Success!'
                @success = true
              else
                raise Exception, response.message

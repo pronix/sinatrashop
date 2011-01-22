@@ -18,4 +18,8 @@ class Product < ActiveRecord::Base
      end
      "$" + d[0] + "." + dec
   end
+
+  def image
+    "/images/" + name.downcase.gsub(' ', '_') + ".jpg"
+  end
 end

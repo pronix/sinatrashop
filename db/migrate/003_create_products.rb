@@ -10,18 +10,15 @@ class CreateProducts < ActiveRecord::Migration
 
     Product.create({ :id => 1,
       :name => "Blackberry Delight",
-      :price => 3.00, :description => "This vanilla cupcake is topped with \ 
-        light whipped vanilla frosting and fresh blackberry drizzle." })
+      :price => 3.00, :description => "This vanilla cupcake is topped with light whipped vanilla frosting and fresh blackberry drizzle." })
     Product.create({ :id => 2,
       :name => "Chocolate Strawberry",
       :price => 2.50,
-      :description => "Splurge on this scrumptious chocolate strawberry \
-        treat, with rich dark chocolate topped with strawberry whipped cream frosting." })
+      :description => "Splurge on this scrumptious chocolate strawberry treat, with rich dark chocolate topped with strawberry whipped cream frosting." })
     Product.create({ :id => 3,
       :name => "Smores",
       :price => 3.50,
-      :description => "This fresh milk \
-        chocolatey cake is layered with marshmalley goodness crisped to perfection." })
+      :description => "This fresh milk chocolatey cake is layered with marshmalley goodness crisped to perfection." })
   end
 
   def self.down

@@ -6,56 +6,129 @@
   <meta name="description" content="My Store" />
   <meta name="keywords" content="My Store" />
   <link href="/stylesheets/style.css" media="screen" rel="stylesheet" type="text/css" />
+  <script type="text/javascript" src="/javascripts/jquery-1.4.4.min.js"></script>
+  <script type="text/javascript" src="/javascripts/site.js"></script>
 </head>
     
 <body>
 
+<div id="header">
+<img id="logo" src="/images/cupcakes.png" />
+</div>
+
+<% if @success %>
+<div class="center">
+<img src="/images/success.png" id="success" />
+</div>
+<% else %>
+
+<div class="wrapper">
 <form action="/" method="post">
 <div class="products">
 <% @products.each do |product| %>
 <div class="product">
+<input type="radio" name="order[product_id]" value="<%= product.id %>" class="<%= product.id %>" />
+<img src="<%= product.image %>" alt="<%= product.name %>" />
+<h2>
 <%= product.name %>
-<%= product.description %>
-<%= product.price_display %>
-<input type="radio" name="order[product_id]" value="<%= product.id %>" />
+<span><%= product.price_display %></span>
+</h2>
+<p><%= product.description %></p>
 </div>
 <% end %>
 </div>
 
 <div class="buy">
-  <% if @success %>
-  <div class="center">
-  <img src="/images/success.png" class="success" />
-  </div>
-  <% else %>
-  <div class="center">
-    <img src="/images/buyitnow.png" class="buyitnow" />
-  </div>
+  <img id="divider" src="/images/divider.png" alt="" />
   <div class="error">
     <%= @message %>
   </div>
     <table width="100%" cellpadding="0" cellspacing="0">
       <tr>
-        <td width="50%" valign="top">
+        <td width="33%" valign="top">
+          <h3>Shipping</h3>
           <p>
-            <label>email:</label>
+            <label>first name</label>
+            <input type="text" name="[order]ship_firstname" value="<%= params[:order][:ship_firstname].to_s %>" />
+          </p>
+          <p>
+            <label>last name</label>
+            <input type="text" name="[order]ship_lastname" value="<%= params[:order][:ship_lastname].to_s %>" />
+          </p>
+          <p>
+            <label>street1</label>
+            <input type="text" name="[order]ship_address1" value="<%= params[:order][:ship_address1].to_s %>" />
+          </p>
+          <p>
+            <label>street2</label>
+            <input type="text" name="[order]ship_address2" value="<%= params[:order][:ship_address2].to_s %>" />
+          </p>
+          <p>
+            <label>city</label>
+            <input type="text" name="[order]ship_city" value="<%= params[:order][:ship_city].to_s %>" />
+          </p>
+          <p>
+            <label>state</label>
+            <select name="[order]ship_state">
+            <%= erb :states, :locals => { :field => "ship_state", :params => params } %>
+            </select>
+          </p>
+          <p>
+            <label>zip</label>
+            <input type="text" name="[order]ship_zipcode" value="<%= params[:order][:ship_zipcode].to_s %>" />
+          </p>
+        </td><td width="33%" valign="top">
+          <h3>Billing</h3>
+          <p>
+            <label>first name</label>
+            <input type="text" name="[order]bill_firstname" value="<%= params[:order][:bill_firstname].to_s %>" />
+          </p>
+          <p>
+            <label>last name</label>
+            <input type="text" name="[order]bill_lastname" value="<%= params[:order][:bill_lastname].to_s %>" />
+          </p>
+          <p>
+            <label>street1</label>
+            <input type="text" name="[order]bill_address1" value="<%= params[:order][:bill_address1].to_s %>" />
+          </p>
+          <p>
+            <label>street2</label>
+            <input type="text" name="[order]bill_address2" value="<%= params[:order][:bill_address2].to_s %>" />
+          </p>
+          <p>
+            <label>city</label>
+            <input type="text" name="[order]bill_city" value="<%= params[:order][:bill_city].to_s %>" />
+          </p>
+          <p>
+            <label>state</label>
+            <select name="[order]bill_state">
+            <%= erb :states, :locals => { :field => "bill_state", :params => params } %>
+            </select>
+          </p>
+          <p>
+            <label>zip</label>
+            <input type="text" name="[order]bill_zipcode" value="<%= params[:order][:bill_zipcode].to_s %>" />
+          </p>
+        </td><td width="33%" valign="top">
+          <h3>Payment</h3>
+          <p>
+            <label>email</label>
             <input type="text" name="[order]email" value="<%= params[:order][:email].to_s %>"/>
           </p>
           <p>
-            <label>phone:</label>
+            <label>phone</label>
             <input type="text" name="[order]phone" value="<%= params[:order][:phone].to_s %>" />
           </p>
-        </td><td>
           <p>
-            <label>card number:</label>
+            <label>card number</label>
             <input type="text" name="[credit_card]number" />
           </p>
           <p>
-            <label>card code:</label>
+            <label>card code</label>
             <input type="text" name="[credit_card]verification_value" />
           </p>
           <p>
-            <label>expiration date:</label>
+            <label>expiration date</label>
             <select name="[credit_card]month" id="month">
             <% 1.upto(12) do |a| %>
             <option value="<%= a %>"><%= a %></option>
@@ -67,80 +140,22 @@
             <% end %>
             </select>
           </p>
-        </td>
-      </tr>
-      <tr><td>
-        <h3>Billing Address</h3>
-          <p>
-            <label>first name:</label>
-            <input type="text" name="[order]bill_firstname" value="<%= params[:order][:bill_firstname].to_s %>" />
+          <p id="p_price">
+            <label id="price">price</label>
+            <label id="price_display"></label>
           </p>
-          <p>
-            <label>last name:</label>
-            <input type="text" name="[order]bill_lastname" value="<%= params[:order][:bill_lastname].to_s %>" />
-          </p>
-          <p>
-            <label>street1:</label>
-            <input type="text" name="[order]bill_address1" value="<%= params[:order][:bill_address1].to_s %>" />
-          </p>
-          <p>
-            <label>street2:</label>
-            <input type="text" name="[order]bill_address2" value="<%= params[:order][:bill_address2].to_s %>" />
-          </p>
-          <p>
-            <label>city:</label>
-            <input type="text" name="[order]bill_city" value="<%= params[:order][:bill_city].to_s %>" />
-          </p>
-          <p>
-            <label>state:</label>
-            <select name="[order]bill_state">
-            <%= erb :states, :locals => { :field => "bill_state", :params => params } %>
-            </select>
-          </p>
-          <p>
-            <label>zip:</label>
-            <input type="text" name="[order]bill_zipcode" value="<%= params[:order][:bill_zipcode].to_s %>" />
-          </p>
-      </td><td>
-        <h3>Shipping Address</h3>
-          <p>
-            <label>first name:</label>
-            <input type="text" name="[order]ship_firstname" value="<%= params[:order][:ship_firstname].to_s %>" />
-          </p>
-          <p>
-            <label>last name:</label>
-            <input type="text" name="[order]ship_lastname" value="<%= params[:order][:ship_lastname].to_s %>" />
-          </p>
-          <p>
-            <label>street1:</label>
-            <input type="text" name="[order]ship_address1" value="<%= params[:order][:ship_address1].to_s %>" />
-          </p>
-          <p>
-            <label>street2:</label>
-            <input type="text" name="[order]ship_address2" value="<%= params[:order][:ship_address2].to_s %>" />
-          </p>
-          <p>
-            <label>city:</label>
-            <input type="text" name="[order]ship_city" value="<%= params[:order][:ship_city].to_s %>" />
-          </p>
-          <p>
-            <label>state:</label>
-            <select name="[order]ship_state">
-            <%= erb :states, :locals => { :field => "ship_state", :params => params } %>
-            </select>
-          </p>
-          <p>
-            <label>zip:</label>
-            <input type="text" name="[order]ship_zipcode" value="<%= params[:order][:ship_zipcode].to_s %>" />
-          </p>
+          <input type="image" src="/images/submit.png" value="Submit" class="submit" />
         </td>
       </tr>
     </table>
-    <div class="center">
-      <input type="image" src="/images/submit.png" value="Submit" class="submit" />
-    </div>
-  <% end %>
 </div>
 </form>
+</div>
+<% if params && params[:order] && !params[:order][:product_id].nil? %>
+<input type="hidden" name="previous_selection" id="previous_selection" value="<%= params[:order][:product_id] %>" />
+<% end %>
+<% end %>
+
+<div id="footer"></div>
 </body>
 </html>

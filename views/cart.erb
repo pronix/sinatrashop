@@ -6,30 +6,37 @@
   <meta name="description" content="My Store" />
   <meta name="keywords" content="My Store" />
   <link href="/stylesheets/style.css" media="screen" rel="stylesheet" type="text/css" />
+  <script type="text/javascript" src="/javascripts/jquery-1.4.4.min.js"></script>
 </head>
     
-<body>
+<body class="cart">
 
-<% if @success %>
-<div class="center">
-<img src="/images/success.png" class="success" />
+<div id="header">
+<img id="logo" src="/images/cupcakes.png" />
 </div>
+
+<div class="wrapper">
+<% if @success %>
+<img src="/images/success.png" class="success" />
 <% else %>
-<form action="/cart/update" method="post">
-<% @cart.each do |item| %>
-Item: <%= item[:quantity] %>
-<%= item[:product].name %> 
-<input type="text" name="quantity[<%= item[:product].id %>]" value="<%= item[:quantity] %>" />
-<% if false %><a href="/cart/remove/<%= item[:product].id %>">Remove</a><% end %>
-<br /><br />
-<% end %>
-<input type="submit" value="Update Cart" />
+<form action="/cart/update" method="post" class="cart">
+  <% @cart.each do |item| %>
+  <div class="cart_item">
+    <img src="<%= item[:product].image %>" class="thumbnail" alt="<%= item[:product].name %>" />
+    <p><%= item[:product].name %></p>
+    <input type="text" name="quantity[<%= item[:product].id %>]" value="<%= item[:quantity] %>" />
+    <a href="#" onclick="$(this).siblings('input').val('0'); $('form.cart').submit();">Remove</a>
+  </div>
+  <% end %>
+  <div class="totals">
+    <input type="submit" value="Update Cart" />
+    <%= price_display(@total) %>
+    <a href="/cart/clear">Clear Cart!</a>
+  </div>
 </form>
 
-<%= price_display(@total) %>
-<a href="/cart/clear">Clear Cart!</a>
 
-<form action="/cart" method="post">
+<form action="/cart" method="post" class="order">
 <div class="buy">
   <div class="center">
     <img src="/images/buyitnow.png" class="buyitnow" />
@@ -145,6 +152,9 @@ Item: <%= item[:quantity] %>
 </div>
 </form>
 <% end %>
+</div>
+
+<div id="footer"></div>
 
 </body>
 </html>

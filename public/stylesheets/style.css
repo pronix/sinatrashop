@@ -1,7 +1,6 @@
 body { margin: 0px; font-size: 10px; font-family: "Lucida Sans", sans-serif; }
 label { width: 80px; float: left; position: relative; top: 7px; text-align: right; padding-right: 10px; }
 p { margin: 5px 0px; }
-form { clear: both; }
 div.error { color: #e4195b; clear: both; line-height: 1.7em; font-size: 11px; margin-top: 10px; }
 input, select { width: 150px; }
 select#month, select#year { width: 60px; }
@@ -15,15 +14,13 @@ img#success { margin: 80px auto; }
 input.submit { width: 260px; margin-top: 10px; }
 
 div.wrapper { width: 960px; margin: 0px auto; }
-div.product { font-size: 10px; float: left; width: 33%; margin-top: 15px; text-align: center; opacity: 0.5; } 
-div.product:hover { cursor: pointer; }
-div.product img { width: 230px; }
-div.product h2 { font-size: 14px; font-weight: 1.5em; text-align: center; font-weight: normal; }
-div.product h2 span { font-weight: normal; }
-div.product input { position: relative; top: 2px; display: none; }
-div.product p { text-align: left; padding: 0px 43px; line-height: 1.75em; }
-div.hovered { opacity: 0.8; }
-div.selected { opacity: 1.0; }
+form.product { font-size: 10px; float: left; width: 33%; margin-top: 15px; text-align: center; }
+form.product:hover { cursor: pointer; }
+form.product img { width: 230px; }
+form.product h2 { font-size: 14px; font-weight: 1.5em; text-align: center; font-weight: normal; }
+form.product h2 span { font-weight: normal; }
+form.product input { position: relative; top: 2px; }
+form.product p { text-align: left; padding: 0px 43px; line-height: 1.75em; }
 
 p#p_price { margin-bottom: 10px; height: 25px; }
 label#price { font-weight: bold; }
@@ -33,3 +30,11 @@ div#header { background: url(/images/top_gradient.png) repeat-x; text-align: cen
 img#logo { margin-top: 15px; }
 div#footer { clear: both; background: url(/images/footer.png); height: 168px; width: 100%; }
 img#divider { width: 960px; }
+
+body.cart img.thumbnail { height: 80px; }
+body.cart form.cart { float: left; width: 300px; }
+body.cart form.order { float: right; width: 650px; }
+body.cart div.cart_item { margin-bottom: 10px; clear: both; height: 80px; }
+body.cart div.cart_item img, body.cart div.cart_item p, body.cart div.cart_item input { float: left; }
+body.cart div.cart_item input { width: 40px; }
+body.cart div.cart_item div.totals { clear: both; } 

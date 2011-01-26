@@ -14,15 +14,16 @@ class Order < ActiveRecord::Base
   validates_presence_of :ship_zipcode
   validates_presence_of :phone
   validates_format_of :email, :with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i, :on => :create
-  validates_presence_of :product_id
 
   has_many :orderlines
 
   def avs_address
-    :address => bill_address1,
-    :city    => bill_city,
-    :state   => bill_state,
-    :zip     => bill_zipcode,
-    :country => "US"
+    {
+      :address => bill_address1,
+      :city    => bill_city,
+      :state   => bill_state,
+      :zip     => bill_zipcode,
+      :country => "US"
+    }
   end
 end

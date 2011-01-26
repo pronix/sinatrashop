@@ -44,7 +44,7 @@ class MyStore < Sinatra::Base
              gateway = ActiveMerchant::Billing::AuthorizeNetGateway.new(settings.authorize_credentials)
  
              # Authorize for $10 dollars (1000 cents) 
-             gateway_response = gateway.authorize(order.total*100, credit_card)
+             gateway_response = gateway.authorize(order.total*100, credit_card, :address => order.avs_address)
              if gateway_response.success?
                gateway.capture(1000, gateway_response.authorization)
                response.set_cookie("cart", { :value => '', :path => '/' })

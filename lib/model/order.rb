@@ -19,10 +19,12 @@ class Order < ActiveRecord::Base
   belongs_to :product
 
   def avs_address
+    {
     :address => bill_address1,
     :city    => bill_city,
     :state   => bill_state,
     :zip     => bill_zipcode,
     :country => "US"
+    }
   end
 end

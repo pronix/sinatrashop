@@ -42,7 +42,6 @@ class MyStore < Sinatra::Base
           credit_card = ActiveMerchant::Billing::CreditCard.new(params[:credit_card])
           if credit_card.valid?
              gateway = ActiveMerchant::Billing::AuthorizeNetGateway.new(settings.authorize_credentials)
- 
              # Authorize for $10 dollars (1000 cents) 
              gateway_response = gateway.authorize(order.total*100, credit_card, :address => order.avs_address)
              if gateway_response.success?

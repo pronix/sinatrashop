@@ -14,8 +14,8 @@ class Order < ActiveRecord::Base
   validates_presence_of :ship_zipcode
   validates_presence_of :phone
   validates_format_of :email, :with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i, :on => :create
+  validates_presence_of :product_id
 
-  belongs_to :product
   has_many :orderlines
 
   def avs_address

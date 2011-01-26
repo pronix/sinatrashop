@@ -7,8 +7,8 @@ select#month, select#year { width: 60px; }
 h3 { font-size: 12px; font-weight: normal; text-align: center;  }
 a { outline: none; }
 img { border: none; }
-
 div.clear { clear: both; }
+
 img.product { float: left; width: 29%; margin-top: 30px; }
 div.buy { padding: 5px 0px 40px 0px; }
 div.center { text-align: center; }

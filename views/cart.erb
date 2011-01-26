@@ -1,25 +1,33 @@
-<%= erb :header %>
-
+<%= erb :header, :locals => { :body_class => 'cart' } %>
+    
+<div class="wrapper">
 <% if @success %>
 <div class="center">
-<img src="/images/success.png" class="success" />
+<img src="/images/success.png" id="success" />
 </div>
 <% else %>
-<form action="/cart/update" method="post">
-<% @cart.each do |item| %>
-Item: <%= item[:quantity] %>
-<%= item[:product].name %> 
-<input type="text" name="quantity[<%= item[:product].id %>]" value="<%= item[:quantity] %>" />
-<% if false %><a href="/cart/remove/<%= item[:product].id %>">Remove</a><% end %>
-<br /><br />
-<% end %>
-<input type="submit" value="Update Cart" />
+<% if @cart.empty? %>
+<div class="center">
+<p>Your Cart is empty!</p>
+</div>
+<% else %>
+<form action="/cart/update" method="post" class="cart">
+  <% @cart.each do |item| %>
+  <div class="cart_item">
+    <img src="<%= item[:product].image %>" class="thumbnail" alt="<%= item[:product].name %>" />
+    <p><%= item[:product].name %></p>
+    <input type="text" name="quantity[<%= item[:product].id %>]" value="<%= item[:quantity] %>" />
+    <a href="/cart/remove/<%= item[:product].id %>">Remove</a>
+  </div>
+  <% end %>
+  <div class="totals">
+    <input type="submit" value="Update Cart" />
+    <%= price_display(@total) %>
+    <a href="/cart/clear">Clear Cart!</a>
+  </div>
 </form>
 
-<%= price_display(@total) %>
-<a href="/cart/clear">Clear Cart!</a>
-
-<form action="/cart" method="post">
+<form action="/cart" method="post" class="order">
 <div class="buy">
   <div class="center">
     <img src="/images/buyitnow.png" class="buyitnow" />
@@ -135,5 +143,7 @@ Item: <%= item[:quantity] %>
 </div>
 </form>
 <% end %>
+<% end %>
+</div>
 
 <%= erb :footer %>

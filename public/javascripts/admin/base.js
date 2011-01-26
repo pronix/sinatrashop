@@ -40,7 +40,7 @@ var update_link = function(item) {
 };
 var close_link = function(item) {
 	return $(document.createElement('a'))
-		.html('Cancel Edit')
+		.html('Cancel')
 		.attr('href', '#')
 		.addClass("item" + item.id)
 		.click(function() { close_item(this); });
@@ -96,9 +96,14 @@ var update_item = function(node) {
 
 var close_item = function(node) {
 	var type = $('td.left a.selected').attr('id');
-	var item = items[$(node).attr('class')]; 
+	var item = items[$(node).attr('class')];
 	var content = functions[type].content(item);
-	$('td.right div#item' + item.id).replaceWith(render_display_node(item, type));
+	if(item.id == 'new') {
+		$('td.right div#itemnew').remove();
+		$('td.right').append(new_link());
+	} else {
+		$('td.right div#item' + item.id).replaceWith(render_display_node(item, type));
+	}
 };
 
 var delete_item = function(node) {
@@ -137,7 +142,7 @@ var new_item = function() {
 	items["itemnew"] = item;
 	var content = functions[type].edit(item);
 	var node = $(document.createElement('div'))
-		.addClass('itemnew')
+		.attr('id', 'itemnew')
 		.html(content)
 		.append(update_link(item))
 		.append(close_link(item));

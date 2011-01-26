@@ -1,19 +1,20 @@
-<%= erb :header %>
+<%= erb :header, :locals => { :body_class => 'index' } %>
 
-<a href="/cart">Your Cart</a>
-  <div class="products">
-    <% @products.each do |product| %>
-    <form action="/cart/add" method="post">
-    <div class="product">
-    <%= product.name %>
-    <%= product.description %>
-    <%= price_display(product.price) %>
+<div class="products wrapper">
+  <% @products.each do |product| %>
+  <form action="/cart/add" method="post" class="product">
+    <img src="<%= product.image %>" alt="<%= product.name %>" />
+    <h2>
+      <%= product.name %>
+      <span><%= product.price_display %></span>
+    </h2>
+    <p><%= product.description %></p>
     <input type="hidden" name="product_id" value="<%= product.id %>" />
     <input type="text" name="quantity" value="1" />
-    <input type="submit" value="ADD!" />
-    </div>
-    </form>
-    <% end %>
-  </div>
+    <input class="submit" type="submit" value="ADD!" />
+  </form>
+  <% end %>
+  <div class="clear"></div>
+</div>
 
 <%= erb :footer %>

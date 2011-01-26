@@ -1,9 +1,16 @@
 require 'sinatra/base'
+require 'sinatra/reloader'
 require 'erb'
 require 'active_record'
 require 'lib/store'
 
 class MyStore < Sinatra::Base
+  configure(:development) do
+    register Sinatra::Reloader
+    also_reload "lib/model/*.rb"
+    dont_reload "lib/*.rb"
+  end
+
   register Sinatra::Admin
   register Sinatra::Authorization
   register Sinatra::Configuration
@@ -16,11 +23,11 @@ class MyStore < Sinatra::Base
     
   post '/cart' do
     @products = Product.all
+    cart = Cart.build_cart(request.cookies["cart"])
     begin
       ActiveRecord::Base.transaction do
         order = Order.new(params[:order])
         if order.save
-          cart = Cart.build_cart(request.cookies["cart"])
           total = 0
           cart.each do |item|
             Orderline.create({ :order_id => order.id,
@@ -40,7 +47,7 @@ class MyStore < Sinatra::Base
              gateway_response = gateway.authorize(order.total*100, credit_card)
              if gateway_response.success?
                gateway.capture(1000, gateway_response.authorization)
-               response.set_cookie("cart", Cart.clear)
+               response.set_cookie("cart", { :value => '', :path => '/' })
                @success = true
              else
                raise Exception, gateway_response.message
@@ -54,10 +61,10 @@ class MyStore < Sinatra::Base
        end
     rescue Exception => e
       @message = e.message 
+      @cart = cart
+      @total = cart.sum { |item| item[:quantity]*item[:product].price }
     end
-  
-    @cart = Cart.build_cart(request.cookies["cart"])
-    @total = @cart.sum { |item| item[:quantity]*item[:product].price }
+
     erb :cart
   end
   

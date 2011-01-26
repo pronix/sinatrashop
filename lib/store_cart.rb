@@ -27,22 +27,22 @@ module Sinatra
       end
 
       app.post '/cart/add' do
-        response.set_cookie("cart", Cart.add(request.cookies["cart"], params))
+        response.set_cookie("cart", { :value => Cart.add(request.cookies["cart"], params), :path => '/' })
         redirect "/cart"
       end
 
       app.post '/cart/update' do
-        response.set_cookie("cart", Cart.update(request.cookies["cart"], params))
+        response.set_cookie("cart", { :value => Cart.update(request.cookies["cart"], params), :path => '/' })
         redirect "/cart"
       end
 
       app.get '/cart/remove/:product_id' do |product_id|
-        response.set_cookie("cart", Cart.remove(request.cookies["cart"], product_id))
+        response.set_cookie("cart", { :value => Cart.remove(request.cookies["cart"], product_id), :path => '/' })
         redirect "/cart"
       end
       
       app.get '/cart/clear' do
-        response.set_cookie("cart", Cart.clear)
+        response.set_cookie("cart", { :value => '', :path => '/' })
         redirect "/cart"
       end
     end

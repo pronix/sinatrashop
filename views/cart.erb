@@ -12,12 +12,19 @@
 <body class="cart">
 
 <div id="header">
-<img id="logo" src="/images/cupcakes.png" />
+  <a href="/"><img id="logo" src="/images/cupcakes.png" /></a>
 </div>
 
 <div class="wrapper">
 <% if @success %>
-<img src="/images/success.png" class="success" />
+<div class="center">
+<img src="/images/success.png" id="success" />
+</div>
+<% else %>
+<% if @cart.empty? %>
+<div class="center">
+<p>Your Cart is empty!</p>
+</div>
 <% else %>
 <form action="/cart/update" method="post" class="cart">
   <% @cart.each do |item| %>
@@ -25,7 +32,7 @@
     <img src="<%= item[:product].image %>" class="thumbnail" alt="<%= item[:product].name %>" />
     <p><%= item[:product].name %></p>
     <input type="text" name="quantity[<%= item[:product].id %>]" value="<%= item[:quantity] %>" />
-    <a href="#" onclick="$(this).siblings('input').val('0'); $('form.cart').submit();">Remove</a>
+    <a href="/cart/remove/<%= item[:product].id %>">Remove</a>
   </div>
   <% end %>
   <div class="totals">
@@ -34,7 +41,6 @@
     <a href="/cart/clear">Clear Cart!</a>
   </div>
 </form>
-
 
 <form action="/cart" method="post" class="order">
 <div class="buy">
@@ -151,6 +157,7 @@
     </div>
 </div>
 </form>
+<% end %>
 <% end %>
 </div>
 

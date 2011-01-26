@@ -12,8 +12,10 @@
     
 <body>
 <div id="header">
-  <img id="logo" src="/images/cupcakes.png" />
-  <a href="/cart">Your Cart</a>
+  <div class="wrapper">
+    <a href="/"><img id="logo" src="/images/cupcakes.png" /></a>
+    <a id="cart_link" href="/cart">Your Cart</a>
+  </div>
 </div>
 
 <div class="products wrapper">
@@ -27,9 +29,10 @@
     <p><%= product.description %></p>
     <input type="hidden" name="product_id" value="<%= product.id %>" />
     <input type="text" name="quantity" value="1" />
-    <input type="submit" value="ADD!" />
+    <input class="submit" type="submit" value="ADD!" />
   </form>
   <% end %>
+  <div class="clear"></div>
 </div>
 
 <div id="footer"></div>

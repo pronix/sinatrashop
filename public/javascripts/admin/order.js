@@ -4,7 +4,7 @@ functions.order = {
 			+ '<input name="email" value="' + order.email + '" />'
 			+ ' &ndash; '
 			+ '<input name="phone" value="' + order.phone + '" /><br />'
-			+ 'Product: ' + order.product_id + '<br />'
+			+ 'Total: ' + order.total + '<br />'
 			+ '<b>Billing</b><br />'
 			+ order.bill_firstname + ' ' + order.bill_lastname + '<br />'
 			+ order.bill_address1 + ' ' + order.bill_address2 + '<br />'
@@ -16,7 +16,7 @@ functions.order = {
 	},
 	content: function(order) {
 		return '<b>Order: ' + order.id + '</b><br />' + order.email + ' &ndash; ' + order.phone + '<br />'
-			+ 'Product: ' + order.product_id + '<br />'
+			+ 'Total: ' + order.total + '<br />'
 			+ '<b>Billing</b><br />'
 			+ order.bill_firstname + ' ' + order.bill_lastname + '<br />'
 			+ order.bill_address1 + ' ' + order.bill_address2 + '<br />'

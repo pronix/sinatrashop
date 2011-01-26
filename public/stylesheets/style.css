@@ -6,21 +6,26 @@ input, select { width: 150px; }
 select#month, select#year { width: 60px; }
 h3 { font-size: 12px; font-weight: normal; text-align: center;  }
 a { outline: none; }
+img { border: none; }
 
+div.clear { clear: both; }
 img.product { float: left; width: 29%; margin-top: 30px; }
 div.buy { padding: 5px 0px 40px 0px; }
 div.center { text-align: center; }
 img#success { margin: 80px auto; }
 input.submit { width: 260px; margin-top: 10px; }
+a#cart_link { color: #e4195b; text-decoration: none; font-size: 14px; position: absolute; bottom: 10px; right: 56px; }
 
-div.wrapper { width: 960px; margin: 0px auto; }
+div.wrapper { width: 960px; margin: 0px auto; position: relative; }
+div.products { margin-bottom: 20px; }
 form.product { font-size: 10px; float: left; width: 33%; margin-top: 15px; text-align: center; }
 form.product:hover { cursor: pointer; }
 form.product img { width: 230px; }
 form.product h2 { font-size: 14px; font-weight: 1.5em; text-align: center; font-weight: normal; }
 form.product h2 span { font-weight: normal; }
-form.product input { position: relative; top: 2px; }
-form.product p { text-align: left; padding: 0px 43px; line-height: 1.75em; }
+form.product input { width: 20px; }
+form.product input.submit { width: 50px; }
+form.product p { text-align: left; padding: 0px 43px; line-height: 1.75em; height: 70px; }
 
 p#p_price { margin-bottom: 10px; height: 25px; }
 label#price { font-weight: bold; }

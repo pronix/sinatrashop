@@ -65,7 +65,7 @@ var update_item = function(node) {
 	var type = $('td.left a.selected').attr('id');
 	var item = items[$(node).attr('class')]; 
 	var data = {};
-	$('div#item' + item.id + ' input, div#item' + item.id + ' textarea').each(function(i, j) {
+	$('div#item' + item.id + ' input, div#item' + item.id + ' textarea, div#item' + item.id + ' select').each(function(i, j) {
 		data[$(j).attr('name')] = $(j).val();
 	});
 	$.ajax({

@@ -22,7 +22,7 @@ class Cart
 
   def self.to_string(cart)
     cookie = ""
-    cart.each do |k, v|
+    cart.items.each do |k, v|
       cookie += "#{k.to_s}:#{v.to_s};" if v.to_i > 0 
     end
     cookie

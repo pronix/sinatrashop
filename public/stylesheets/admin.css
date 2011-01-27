@@ -3,7 +3,7 @@ label { width: 80px; float: left; position: relative; top: 7px; text-align: righ
 p { margin: 5px 0px; }
 form { clear: both; }
 div.error { color: #fa4e08; width: 480px; padding-left: 90px; line-height: 1.7em; font-size: 11px; }
-input, select { width: 150px; }
+input, select { width: 200px; }
 select#month, select#year { width: 60px; }
 h1 { width: 100px; }
 h3 { font-size: 12px; font-weight: normal; text-align: center;  }

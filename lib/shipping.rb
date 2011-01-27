@@ -10,6 +10,7 @@ module Sinatra
 
       app.post '/shipping_methods' do
         input = json_to_hash(request.body.read.to_s)
+	input[:cart] = request.cookies["cart"]
         shipping_methods = ShippingMethod.all
         @available_methods = []  
         shipping_methods.each do |shipping_method|

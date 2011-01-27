@@ -9,7 +9,7 @@ module Sinatra
         if d[1].to_i < 1
           dec = "00"
         elsif d[1].to_i < 10
-          dec = d[1] + "0"
+          dec = "0" + d[1].to_i.to_s
         elsif d[1].to_i > 99
           dec = (d[1][0..2].to_f/10).round.to_s
         end
@@ -52,13 +52,16 @@ module Sinatra
             order = Order.new(params[:order])
             if order.save
               cart = Cart.new(request.cookies["cart"])
+puts "steph: #{cart.items.inspect}"
               cart.items.each do |item|
                 Orderline.create({ :order_id => order.id,
                   :product_id => item[:product].id,
                   :price => item[:product].price,
                   :quantity => item[:quantity] })
               end
-              order.update_attribute(:total, cart.total)
+puts "steph: #{order.inspect}"
+              order.update_totals(cart)
+puts "steph: #{order.inspect}"
               params[:credit_card][:first_name] = params[:order][:bill_firstname]
               params[:credit_card][:last_name] = params[:order][:bill_lastname]
               credit_card = ActiveMerchant::Billing::CreditCard.new(params[:credit_card])

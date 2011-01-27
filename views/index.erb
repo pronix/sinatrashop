@@ -6,7 +6,7 @@
     <img src="<%= product.image %>" alt="<%= product.name %>" />
     <h2>
       <%= product.name %>
-      <span><%= product.price_display %></span>
+      <span><%= price_display(product.price) %></span>
     </h2>
     <p><%= product.description %></p>
     <input type="hidden" name="product_id" value="<%= product.id %>" />

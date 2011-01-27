@@ -7,7 +7,7 @@ class Calculator::FlatRate < Calculator
     true
   end
 
-  def self.compute(shipping_method, object=nil)
+  def self.compute(shipping_method, cart, params=nil)
     shipping_method.detail.to_f
   end
 end

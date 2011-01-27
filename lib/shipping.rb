@@ -10,7 +10,7 @@ module Sinatra
 
       app.post '/shipping_methods' do
         input = json_to_hash(request.body.read.to_s)
-	input[:cart] = request.cookies["cart"]
+	cart = Cart.new(request.cookies["cart"])
         shipping_methods = ShippingMethod.all
         @available_methods = []  
         shipping_methods.each do |shipping_method|
@@ -18,7 +18,7 @@ module Sinatra
           if klass.available?(params)
             @available_methods << {
               :name	=> klass.description,
-              :amount	=> price_display(klass.compute(shipping_method, input)),
+              :amount	=> price_display(klass.compute(shipping_method, cart, input)),
               :id	=> shipping_method.id
             }
           end

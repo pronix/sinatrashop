@@ -32,17 +32,13 @@ class Order < ActiveRecord::Base
   def update_totals(cart)
     klass = shipping_method.klass.camelize.constantize
     input = {
-      :cart => Cart.to_string(cart),
       :order => {
         :ship_state => ship_state,
         :ship_country => "US"
       }
     }
-puts "steph #{klass.inspect}"
-    ship_cost = klass.compute(shipping_method, input) 
-puts "steph ship cost is: #{ship_cost.inspect}"
-    total = cart.total + ship_cost
-puts "steph #{total.inspect}"
+    self.ship_cost = klass.compute(shipping_method, cart, input) 
+    self.total = cart.total + self.ship_cost
     save
   end
 end

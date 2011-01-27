@@ -7,8 +7,7 @@ class Calculator::FlatPercent < Calculator
     true
   end
 
-  def self.compute(shipping_method, params=nil)
-    cart = Cart.new(params[:cart])
+  def self.compute(shipping_method, cart, params=nil)
     cart.total*(shipping_method.detail).to_f 
   end
 end

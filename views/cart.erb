@@ -27,6 +27,7 @@
 </div>
 <% else %>
 <form action="/cart/update" method="post" class="cart">
+  <img src="/images/cart.png" alt="" class="cart" />
   <% @cart.each do |item| %>
   <div class="cart_item">
     <img src="<%= item[:product].image %>" class="thumbnail" alt="<%= item[:product].name %>" />

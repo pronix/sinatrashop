@@ -9,6 +9,7 @@ a { outline: none; }
 img { border: none; }
 div.clear { clear: both; }
 
+img.cart { width: 80px; }
 img.product { float: left; width: 29%; margin-top: 30px; }
 div.buy { padding: 5px 0px 40px 0px; }
 div.center { text-align: center; }
@@ -23,8 +24,8 @@ form.product:hover { cursor: pointer; }
 form.product img { width: 230px; }
 form.product h2 { font-size: 14px; font-weight: 1.5em; text-align: center; font-weight: normal; }
 form.product h2 span { font-weight: normal; }
-form.product input { width: 20px; }
-form.product input.submit { width: 50px; }
+form.product input { width: 20px; padding: 10px; position: relative; top: -24px; }
+form.product input.submit { width: 100px; margin: 0px; padding: 0px; top: 0px; }
 form.product p { text-align: left; padding: 0px 43px; line-height: 1.75em; height: 70px; }
 
 p#p_price { margin-bottom: 10px; height: 25px; }

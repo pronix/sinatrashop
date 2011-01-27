@@ -10,8 +10,10 @@
     </h2>
     <p><%= product.description %></p>
     <input type="hidden" name="product_id" value="<%= product.id %>" />
-    <input type="text" name="quantity" value="1" />
-    <input class="submit" type="submit" value="ADD!" />
+    <div class="center">
+      <input type="text" name="quantity" value="1" />
+      <input type="image" class="submit" src="/images/add.png" />
+    </div>
   </form>
   <% end %>
   <div class="clear"></div>

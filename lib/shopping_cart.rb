@@ -26,22 +26,22 @@ module Sinatra
       end
 
       app.post '/cart/add' do
-        response.set_cookie("cart", Cart.add(request.cookies["cart"], params))
+        response.set_cookie("cart", { :value => Cart.add(request.cookies["cart"], params), :path => '/' })
         redirect "/cart"
       end
 
       app.post '/cart/update' do
-        response.set_cookie("cart", Cart.update(request.cookies["cart"], params))
+        response.set_cookie("cart", { :value => Cart.update(request.cookies["cart"], params), :path => '/' })
         redirect "/cart"
       end
 
       app.get '/cart/remove/:product_id' do |product_id|
-        response.set_cookie("cart", Cart.remove(request.cookies["cart"], product_id))
+        response.set_cookie("cart", { :value => Cart.remove(request.cookies["cart"], product_id), :path => '/' })
         redirect "/cart"
       end
       
       app.get '/cart/clear' do
-        response.set_cookie("cart", Cart.clear)
+        response.set_cookie("cart", { :value => '', :path => '/' })
         redirect "/cart"
       end
       
@@ -66,11 +66,12 @@ module Sinatra
                 gateway = ActiveMerchant::Billing::AuthorizeNetGateway.new(settings.authorize_credentials)
  
                 # Authorize for $10 dollars (1000 cents) 
-                gateway_response = gateway.authorize(order.total*100, credit_card)
+                gateway_response = gateway.authorize(order.total*100, credit_card, :address => order.avs_address)
                 if gateway_response.success?
                   gateway.capture(1000, gateway_response.authorization)
-                  response.set_cookie("cart", Cart.clear)
+                  response.set_cookie("cart", { :value => '', :path => '/' })
                   @success = true
+                  @cart = Cart.new('')
                 else
                   raise Exception, gateway_response.message
                 end
@@ -83,9 +84,9 @@ module Sinatra
           end
         rescue Exception => e
           @message = e.message 
+          @cart = Cart.new(request.cookies["cart"])
         end
 
-        @cart = Cart.new(request.cookies["cart"])
         erb :cart
       end
     end

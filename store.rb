@@ -1,4 +1,5 @@
 require 'sinatra/base'
+require 'sinatra/reloader'
 require 'erb'
 require 'active_record'
 
@@ -30,13 +31,15 @@ class Store < Sinatra::Base
     load_models!
   end
 
-  # add dynamic loading later
   register Sinatra::Admin
   register Sinatra::Authorization
   register Sinatra::Configuration
   register Sinatra::ShoppingCart
   register Sinatra::Pages
   register Sinatra::Shipping
+  register Sinatra::Reloader
+  also_reload "lib/model/*.rb"
+  dont_reload "lib/*.rb"
 
   before do
     @title = settings.store_title

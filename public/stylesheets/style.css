@@ -17,9 +17,6 @@ img#success { margin: 80px auto; }
 input.submit { width: 260px; margin-top: 10px; }
 a#cart_link { color: #e4195b; text-decoration: none; font-size: 14px; position: absolute; bottom: 10px; right: 56px; }
 
-div.products { float: left; width: 29%; }
-div.product { font-size: 20px; }
-
 p.dynamo { clear: both; }
 p.dynamo label { } 
 p.dynamo input { } 

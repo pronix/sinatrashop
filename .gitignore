@@ -1,3 +1,5 @@
 configuration.rb
 db/*.sqlite3.db
 *.swp
+diagramming/diagram.dot
+diagramming/diagram.svg

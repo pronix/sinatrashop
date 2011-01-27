@@ -8,9 +8,17 @@ class CreateProducts < ActiveRecord::Migration
       t.string :description, :null => false
     end
 
-    Product.create({ :id => 1, :name => "Awesome Book", :price => 10.00, :description => "This book is awesome." })
-    Product.create({ :id => 2, :name => "Rad Book", :price => 15.50, :description => "This book is rad." })
-    Product.create({ :id => 3, :name => "Excellent Book", :price => 20.00, :description => "This book is excellent." })
+    Product.create({ :id => 1,
+      :name => "Blackberry Delight",
+      :price => 3.00, :description => "This vanilla cupcake is topped with light whipped vanilla frosting and fresh blackberry drizzle." })
+    Product.create({ :id => 2,
+      :name => "Chocolate Strawberry",
+      :price => 2.50,
+      :description => "Splurge on this scrumptious chocolate strawberry treat, with rich dark chocolate topped with strawberry whipped cream frosting." })
+    Product.create({ :id => 3,
+      :name => "Smores",
+      :price => 3.50,
+      :description => "This fresh milk chocolatey cake is layered with marshmalley goodness crisped to perfection." })
   end
 
   def self.down

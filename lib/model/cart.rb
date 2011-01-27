@@ -4,6 +4,7 @@ class Cart
 
   def initialize(cookie)
     self.items = []
+    cookie ||= ''
     cookie.split(';').each do |item|
       self.items << { :product => Product.find(item.split(':')[0]), :quantity => (item.split(':')[1]).to_i }
     end
@@ -22,7 +23,7 @@ class Cart
   def self.to_string(cart)
     cookie = ""
     cart.each do |k, v|
-      cookie += "#{k.to_s}:#{v.to_s};" if v > 0 
+      cookie += "#{k.to_s}:#{v.to_s};" if v.to_i > 0 
     end
     cookie
   end

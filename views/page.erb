@@ -1,5 +1,7 @@
-<%= erb :header %>
+<%= erb :header, :locals => { :body_class => 'page' } %>
 
+<div class="wrapper">
 <%= @page.content %>
+</div>
 
 <%= erb :footer %>

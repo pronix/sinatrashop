@@ -1,0 +1,35 @@
+#!/usr/bin/env ruby
+
+# Models diagrams generator
+# run with: -r APP_DIR -m APP_MODEL_DIR
+
+APP_NAME       = "sinatra-railroad"
+APP_HUMAN_NAME = "Sinatra RailRoad"
+APP_VERSION    = [0,1,0]
+COPYRIGHT      = "Copyright (C) 2011 Steph Skardal"
+
+require 'rubygems'
+require 'active_record'
+require 'lib/options_struct'
+require 'lib/models_diagram'
+
+ActiveRecord::Base.establish_connection(
+  :adapter => 'sqlite3',
+  :database =>  'db/development.sqlite3.db'
+)
+
+options = OptionsStruct.new
+
+options.parse ARGV
+
+old_dir = Dir.pwd
+
+Dir.chdir(options.root) if options.root != ''
+
+diagram = ModelsDiagram.new  options
+diagram.generate
+
+Dir.chdir(old_dir)
+
+diagram.print
+exec 'dot -Tsvg diagram.dot > diagram.svg;'

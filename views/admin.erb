@@ -5,11 +5,9 @@
   <title>Admin</title>
   <link href="/stylesheets/admin.css" media="screen" rel="stylesheet" type="text/css" />
   <script type="text/javascript" src="/javascripts/jquery-1.4.4.min.js"></script>
-  <script type="text/javascript" src="/javascripts/admin/base.js"></script>
-  <script type="text/javascript" src="/javascripts/admin/order.js"></script>
-  <script type="text/javascript" src="/javascripts/admin/product.js"></script>
-  <script type="text/javascript" src="/javascripts/admin/page.js"></script>
-  <script type="text/javascript" src="/javascripts/admin/shipping_method.js"></script>
+  <% @files.each do |file| %>
+  <script type="text/javascript" src="/javascripts/admin/<%= file %>"></script>
+  <% end %>
 </head>
     
 <body>

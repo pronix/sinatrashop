@@ -26,6 +26,7 @@ module Sinatra
       end
 
       app.post '/cart/add' do
+        #@cart = 
         response.set_cookie("cart", { :value => Cart.add(request.cookies["cart"], params), :path => '/' })
         redirect "/cart"
       end

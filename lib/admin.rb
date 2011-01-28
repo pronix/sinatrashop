@@ -17,6 +17,7 @@ module Sinatra
 
       app.get '/admin' do
         require_administrative_privileges
+        @files = Dir[File.join(File.dirname(__FILE__), '../public/javascripts/admin', '*.js')].collect { |b| b.basename }
         erb :admin
       end
     

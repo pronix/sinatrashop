@@ -8,6 +8,9 @@ $(function() {
 		var nav_node = $('<a href="#">' + display + 's</a>')
 			.attr('id', e)
 			.click(function() {
+				if(functions[e].extra_action) {
+					functions[e].extra_action();	
+				}
 				$('td.left a').not(this).removeClass('selected');
 				$(this).addClass('selected');
 				display_content(this); 

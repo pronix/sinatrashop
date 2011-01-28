@@ -1,6 +1,6 @@
-<%= erb :header, :locals => { :body_class => 'cart' } %>
+<%= erb :header, :locals => { :body_class => @cart.items.empty? ? 'empty_cart' : 'cart' } %>
     
-<div class="wrapper">
+<div class="wrapper cart_wrapper">
 <% if @success %>
 <div class="center">
 <img src="/images/success.png" id="success" />
@@ -8,7 +8,7 @@
 <% else %>
 <% if @cart.items.empty? %>
 <div class="center">
-<p>Your Cart is empty!</p>
+<img class="empty" src="/images/empty.png" alt="Your Cart is empty!" />
 </div>
 <% else %>
 <form action="/cart/update" method="post" class="cart">
@@ -16,23 +16,22 @@
   <div class="cart_item">
     <img src="<%= item[:product].image %>" class="thumbnail" alt="<%= item[:product].name %>" />
     <p>
-      <%= item[:product].name %><a href="/cart/remove/<%= item[:product].id %>">Remove</a><br /><br />
-      <input type="text" name="quantity[<%= item[:product].id %>]" value="<%= item[:quantity] %>" /><br />
+      <a class="remove" href="/cart/remove/<%= item[:product].id %>"><img src="/images/close.png" /></a>
+      <span><%= item[:product].name %></span>
+      <input type="text" name="quantity[<%= item[:product].id %>]" value="<%= item[:quantity] %>" />
+      x <%= price_display(item[:product].price) %> = <%= price_display(item[:quantity]*item[:product].price) %>
     </p>
   </div>
   <% end %>
+  <img id="small_divider" src="/images/divider_small.png" alt="" />
   <div class="totals">
-    <input type="submit" value="Update Cart" />
-    <%= price_display(@cart.total) %>
-    <a href="/cart/clear">Clear Cart!</a>
+    <span>Total: <%= price_display(@cart.total) %></span>
+    <input type="image" src="/images/update.png" />
   </div>
 </form>
 
 <form action="/cart" method="post" class="order">
-<div class="buy">
-  <div class="center">
-    <img src="/images/buyitnow.png" class="buyitnow" />
-  </div>
+  <img id="checkout" src="/images/checkout.png" alt="checkout" />
   <div class="error">
     <%= @message %>
   </div>
@@ -144,8 +143,8 @@
     <div class="center">
       <input type="image" src="/images/submit.png" value="Submit" class="submit" />
     </div>
-</div>
 </form>
+<div class="clear"></div>
 <% end %>
 <% end %>
 </div>

@@ -14,8 +14,7 @@ img.product { float: left; width: 29%; margin-top: 30px; }
 div.buy { padding: 5px 0px 40px 0px; }
 div.center { text-align: center; }
 img#success { margin: 80px auto; }
-input.submit { width: 260px; margin-top: 10px; }
-a#cart_link { color: #e4195b; text-decoration: none; font-size: 14px; position: absolute; bottom: 10px; right: 56px; }
+input.submit { width: 260px; margin-top: 10px; height: 65px; }
 
 p.dynamo { clear: both; }
 p.dynamo label { } 
@@ -36,14 +35,21 @@ label#price { font-weight: bold; }
 label#price_display { color: #e4195b; font-size: 14px; text-align: left; position: relative; top: 5px; } 
 
 div#header { background: url(/images/top_gradient.png) repeat-x; text-align: center; height: 134px; }
-img#logo { margin-top: 15px; }
+div#ribbon { background: url(/images/ribbon.png) no-repeat scroll 0 bottom; float: right; width: 147px; height: 100px; }
+/* div#ribbon:hover { background-position: -147px bottom; } */
+a#cart_link { color: #e4195b; text-decoration: none; font-size: 14px; margin: 5px 0px 0px 29px; width: 77px; height: 46px; display: block; }
+img#logo { margin-top: 15px; margin-right: -120px; }
 div#footer { clear: both; background: url(/images/footer.png); height: 168px; width: 100%; }
 img#divider { width: 960px; }
 
-body.cart img.thumbnail { height: 80px; }
-body.cart form.cart { float: left; width: 300px; }
+body.cart div#ribbon { float: left; height: 207px; }
+body.cart div#ribbon a#cart_link { margin-top: 100px; }
+body.cart div#ribbon:hover { background-position: 0px bottom; }
+body.cart img#logo { margin-right: 0px; margin-left: -120px; }
+body.cart img.thumbnail { height: 141px; margin-right: 10px; }
+body.cart form.cart { float: left; width: 300px; clear: both; }
 body.cart form.order { float: right; width: 650px; }
-body.cart div.cart_item { margin-bottom: 10px; clear: both; height: 80px; }
+body.cart div.cart_item { margin-bottom: 10px; clear: both; height: 141px; }
 body.cart div.cart_item img, body.cart div.cart_item p, body.cart div.cart_item input { float: left; }
 body.cart div.cart_item input { width: 40px; }
-body.cart div.cart_item div.totals { clear: both; } 
+body.cart div.cart_item div.totals { clear: both; }

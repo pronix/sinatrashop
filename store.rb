@@ -37,6 +37,7 @@ class Store < Sinatra::Base
   register Sinatra::ShoppingCart
   register Sinatra::Pages
   register Sinatra::Shipping
+  register Sinatra::Tax
   configure(:development) do
     register Sinatra::Reloader
     also_reload "lib/model/*.rb"

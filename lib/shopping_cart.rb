@@ -22,11 +22,11 @@ module Sinatra
 
       app.get '/cart' do
         @cart = Cart.new(request.cookies["cart"])
+        @states = State.all
         erb :cart, :locals => { :params => { :order => {}, :credit_card => {} }}
       end
 
       app.post '/cart/add' do
-        #@cart = 
         response.set_cookie("cart", { :value => Cart.add(request.cookies["cart"], params), :path => '/' })
         redirect "/cart"
       end
@@ -88,6 +88,7 @@ module Sinatra
           @cart = Cart.new(request.cookies["cart"])
         end
 
+        @states = State.all
         erb :cart
       end
     end

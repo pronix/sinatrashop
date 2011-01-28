@@ -1,7 +1,7 @@
 var update_shipping = function() {
 	var data = {};
 	$('input.shipping, select.shipping').each(function(i, j) {
-		data[$(j).attr('name')] = $(j).val();
+		data[$(j).attr('name').replace("[order]", '')] = $(j).val();
 	}); 
 
 	$.ajax({

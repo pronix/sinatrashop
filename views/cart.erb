@@ -12,13 +12,13 @@
 </div>
 <% else %>
 <form action="/cart/update" method="post" class="cart">
-  <img src="/images/cart.png" alt="" class="cart" />
   <% @cart.items.each do |item| %>
   <div class="cart_item">
     <img src="<%= item[:product].image %>" class="thumbnail" alt="<%= item[:product].name %>" />
-    <p><%= item[:product].name %></p>
-    <input type="text" name="quantity[<%= item[:product].id %>]" value="<%= item[:quantity] %>" />
-    <a href="/cart/remove/<%= item[:product].id %>">Remove</a>
+    <p>
+      <%= item[:product].name %><a href="/cart/remove/<%= item[:product].id %>">Remove</a><br /><br />
+      <input type="text" name="quantity[<%= item[:product].id %>]" value="<%= item[:quantity] %>" /><br />
+    </p>
   </div>
   <% end %>
   <div class="totals">
@@ -138,7 +138,6 @@
         </td>
       </tr>
       <tr><td colspan="2" id="shipping_methods">
-	<a href="#" id="update_shipping">Update Shipping</a>
         <h3>Shipping Methods</h3>
       </td></tr>
     </table>

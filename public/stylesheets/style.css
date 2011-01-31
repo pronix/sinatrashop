@@ -14,9 +14,6 @@ img.product { float: left; width: 29%; margin-top: 30px; }
 div.center { text-align: center; }
 img#success { margin: 80px auto; }
 
-p.dynamo { clear: both; }
-p.dynamo label { } 
-p.dynamo input { } 
 div.wrapper { width: 960px; margin: 0px auto; position: relative; }
 div.products { margin-bottom: 20px; }
 form.product { font-size: 10px; float: left; width: 33%; margin-top: 15px; text-align: center; }
@@ -40,6 +37,7 @@ img#logo { margin-top: 15px; }
 div#footer { clear: both; background: url(/images/footer.png); height: 168px; width: 100%; }
 img#divider { width: 960px; }
 
+body.empty_cart div.cart_wrapper { background: url(/images/cart_bg.png) repeat-y top right; width: 985px; }
 body.empty_cart div#ribbon { display: none; }
 body.empty_cart img { margin: 80px 0px; }
 
@@ -58,7 +56,12 @@ body.cart form.cart a.remove img { height: 30px; }
 body.cart div.cart_item p { padding: 5px; width: 172px; margin: 0px; }
 body.cart div.cart_item p span { font-size: 12px; padding: 7px 0px 5px 0px; display: block; }
 body.cart div.cart_item input { width: 23px; }
-body.cart img#small_divider { padding-left: 10px; opacity: 0.5; margin-top: -10px; }
-body.cart div.totals { clear: both; padding: 5px 0px 0px 30px; }
-body.cart div.totals span { display: block; font-size: 12px; padding-bottom: 10px; float: left; padding-top: 16px; }
+body.cart img#small_divider { padding-left: 10px; margin-top: -10px; }
+body.cart div.totals { clear: both; padding: 5px 0px 0px 25px; }
+body.cart div.totals span { display: block; font-size: 12px; padding: 2px 0px; float: left; clear: left; width: 112px; text-align: right; }
+body.cart div.totals span#total { font-size: 17px; border-top: 1px solid #e4195b; } 
 body.cart div.totals input { width: 150px; float: right; }
+
+td#shipping_methods label { width: 49%; float: right; text-align: left; } 
+td#shipping_methods div { width: 49%; float: left; text-align: right; position: relative; top: 2px; }  
+td#shipping_methods { padding-bottom: 20px; height: 50px; }

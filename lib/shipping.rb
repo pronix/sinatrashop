@@ -18,7 +18,7 @@ module Sinatra
           if klass.available?(params)
             @available_methods << {
               :name	=> klass.description,
-              :amount	=> price_display(klass.compute(shipping_method, cart, input)),
+              :amount	=> klass.compute(shipping_method, cart, input),
               :id	=> shipping_method.id
             }
           end

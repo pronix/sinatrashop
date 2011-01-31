@@ -1,7 +1,7 @@
-<%= erb :header, :locals => { :body_class => 'page' } %>
+<%= erb "layout/header".to_sym, :locals => { :body_class => 'page' } %>
 
 <div class="wrapper">
 <%= @page.content %>
 </div>
 
-<%= erb :footer %>
+<%= erb "layout/footer".to_sym %>

@@ -1,0 +1,14 @@
+<%= erb "layout/header".to_sym, :locals => { :body_class => 'page' } %>
+
+error message here
+
+<form action="/login" method="post">
+<input type="text" name="email" />
+<input type="password" name="password" />
+<input type="submit" value="submit" />
+</form>
+
+<form action="/create_account" method="post">
+</form>
+
+<%= erb "layout/footer".to_sym %>

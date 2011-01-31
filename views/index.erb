@@ -1,4 +1,4 @@
-<%= erb :header, :locals => { :body_class => 'index' } %>
+<%= erb "layout/header".to_sym, :locals => { :body_class => 'index' } %>
 
 <div class="products wrapper">
   <% @products.each do |product| %>
@@ -19,4 +19,4 @@
   <div class="clear"></div>
 </div>
 
-<%= erb :footer %>
+<%= erb "layout/footer".to_sym %>

@@ -3,19 +3,6 @@ require 'digest/sha1'
 module Sinatra
   module Authorization
     module Helpers
-      def auth
-        @auth ||= Rack::Auth::Basic::Request.new(request.env)
-      end
-     
-      def unauthorized!
-        response['WWW-Authenticate'] = %(Basic realm="Restricted Area")
-        throw :halt, [ 401, 'Authorization Required' ]
-      end
-     
-      def bad_request!
-        throw :halt, [ 400, 'Bad Request' ]
-      end
-     
       def authorized?
         request.env['REMOTE_USER']
       end
@@ -25,21 +12,48 @@ module Sinatra
         !@authorized_user.nil?
       end
      
-      def require_administrative_privileges
-        return if authorized?
-        unauthorized! unless auth.provided?
-        bad_request! unless auth.basic?
-        unauthorized! unless authorize(*auth.credentials)
-        request.env['REMOTE_USER'] = auth.username
-      end
-     
       def admin?
         authorized?
+        # update to roles here
       end
     end
 
     def self.registered(app)
       app.helpers Authorization::Helpers
+
+      app.get '/login' do
+        redirect '/' if authorized?
+        erb :login
+      end
+
+      app.post '/login' do
+        @authorized_user = User.where(:username => params[:email], :password => Digest::SHA1.hexdigest(params[:password])).first
+        request.env['REMOTE_USER'] = @authorized_user.username if @authorized_user
+
+        if authorized?
+          #success message
+          redirect '/'
+        else
+          #fail message
+          redirect '/login'
+        end
+      end
+ 
+      app.get '/logout' do
+        request.env['REMOTE_USER'] = nil
+        redirect '/'
+       end
+
+      app.post '/create_account' do
+        # create user, set to removeuser
+        # request.env...
+        redirect '/'
+      end
+
+      app.get '/orders' do
+        # redirect if not logged in
+        # list users orders
+      end
     end
   end
 end

@@ -1,4 +1,4 @@
-<%= erb :header, :locals => { :body_class => @cart.items.empty? ? 'empty_cart' : 'cart' } %>
+<%= erb "layout/header".to_sym, :locals => { :body_class => @cart.items.empty? ? 'empty_cart' : 'cart' } %>
     
 <div class="wrapper cart_wrapper">
 <% if @success %>
@@ -153,4 +153,6 @@
 <% end %>
 </div>
 
-<%= erb :footer %>
+<%= erb "layout/footer".to_sym %>
+<script type="text/javascript" src="/javascripts/shipping.js"></script>
+<script type="text/javascript" src="/javascripts/tax_rate.js"></script>

@@ -65,3 +65,9 @@ body.cart div.totals input { width: 150px; float: right; }
 td#shipping_methods label { width: 49%; float: right; text-align: left; } 
 td#shipping_methods div { width: 49%; float: left; text-align: right; position: relative; top: 2px; }  
 td#shipping_methods { padding-bottom: 20px; height: 50px; }
+
+form#login { float: left; width: 49%; }
+form#create_account { float: right; width: 49%; }
+
+div#nav { position: absolute; right: 100px; }
+div#nav a { color: #FFF; text-decoration: none; }

@@ -16,5 +16,12 @@
     <div id="ribbon">
       <a id="cart_link" href="/cart"><img src="/images/cart.png" alt="Your Cart" class="cart" /></a>
     </div>
+    <div id="nav">
+      <% if authorized? %>
+      <a href="/logout">Log Out</a>
+      <% else %>
+      <a href="/login">Log In</a>
+      <% end %>
+    </div>
   </div>
 </div>

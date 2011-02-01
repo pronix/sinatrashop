@@ -25,18 +25,23 @@ module Sinatra
         redirect '/' if authorized?
         erb :login
       end
+      app.get '/create_account' do
+        redirect '/' if authorized?
+        erb :login
+      end
 
       app.post '/login' do
-        @authorized_user = User.where(:username => params[:email], :password => Digest::SHA1.hexdigest(params[:password])).first
-        request.env['REMOTE_USER'] = @authorized_user.username if @authorized_user
+        authorized_user = User.where(:username => params[:email], :password => Digest::SHA1.hexdigest(params[:password])).first
+        request.env['REMOTE_USER'] = authorized_user.username if authorized_user
 
         if authorized?
           #success message
           redirect '/'
         else
           #fail message
-          redirect '/login'
+          @login_errors = 'Incorrect username or password.'
         end
+        erb :login
       end
  
       app.get '/logout' do
@@ -45,9 +50,25 @@ module Sinatra
        end
 
       app.post '/create_account' do
-        # create user, set to removeuser
-        # request.env...
-        redirect '/'
+        begin
+	  if params[:password] != params[:repassword]
+            raise Exception, 'Your passwords did not match.'
+          end
+          if params[:password].length < 6
+            raise Exception, 'Your password must be at least 6 characters.'
+          end
+          user = User.create({ :username => params[:email],
+            :password => Digest::SHA1.hexdigest(params[:password]) })
+          if user.save 
+            request.env['REMOTE_USER'] = user.username
+            redirect '/'
+          else
+            raise Exception, user.errors.full_messages
+          end
+        rescue Exception => e
+          @create_errors = e.message
+        end
+        erb :login
       end
 
       app.get '/orders' do

@@ -21,6 +21,7 @@ module Sinatra
       app.helpers ShoppingCart::Helpers
 
       app.get '/cart' do
+        @username = session["username"]
         @cart = Cart.new(request.cookies["cart"])
         @states = State.all
         erb :cart, :locals => { :params => { :order => {}, :credit_card => {} }}
@@ -50,6 +51,12 @@ module Sinatra
         @products = Product.all
         begin
           ActiveRecord::Base.transaction do
+            if !params[:order].has_key?(:email) && authorized?
+              user = User.find_by_username(session["username"])
+              params[:order][:email] = user.username
+              params[:order][:user_id] = user.id
+            end
+puts "steph: #{params.inspect}"
             order = Order.new(params[:order])
             if order.save
               cart = Cart.new(request.cookies["cart"])
@@ -88,6 +95,7 @@ module Sinatra
           @cart = Cart.new(request.cookies["cart"])
         end
 
+        @username = session["username"]
         @states = State.all
         erb :cart
       end

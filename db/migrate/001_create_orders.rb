@@ -20,6 +20,7 @@ class CreateOrders < ActiveRecord::Migration
       t.decimal  :ship_cost
       t.decimal  :total
       t.references :shipping_method
+      t.references :user
       t.timestamps
     end
   end

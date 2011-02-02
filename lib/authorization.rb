@@ -4,17 +4,14 @@ module Sinatra
   module Authorization
     module Helpers
       def authorized?
-        request.env['REMOTE_USER']
-      end
-     
-      def authorize(username, password)
-        @authorized_user ||= User.where(:username => username, :password => Digest::SHA1.hexdigest(password)).first
-        !@authorized_user.nil?
+        !session["username"].nil?
       end
      
       def admin?
         authorized?
-        # update to roles here
+      end
+      def require_administrative_privileges
+        authorized?
       end
     end
 
@@ -25,55 +22,53 @@ module Sinatra
         redirect '/' if authorized?
         erb :login
       end
-      app.get '/create_account' do
-        redirect '/' if authorized?
-        erb :login
-      end
 
-      app.post '/login' do
-        authorized_user = User.where(:username => params[:email], :password => Digest::SHA1.hexdigest(params[:password])).first
-        request.env['REMOTE_USER'] = authorized_user.username if authorized_user
-
-        if authorized?
-          #success message
-          redirect '/'
+      app.post '/login.json' do
+        user = User.login(json_to_hash(request.body.read.to_s))
+        if user.nil?
+          status 500
         else
-          #fail message
-          @login_errors = 'Incorrect username or password.'
+          session["username"] = user.username
+          status 200
+          user.username.to_json 
         end
-        erb :login
       end
- 
+
       app.get '/logout' do
-        request.env['REMOTE_USER'] = nil
+        session["username"] = nil
         redirect '/'
-       end
-
-      app.post '/create_account' do
-        begin
-	  if params[:password] != params[:repassword]
-            raise Exception, 'Your passwords did not match.'
-          end
-          if params[:password].length < 6
-            raise Exception, 'Your password must be at least 6 characters.'
-          end
-          user = User.create({ :username => params[:email],
-            :password => Digest::SHA1.hexdigest(params[:password]) })
-          if user.save 
-            request.env['REMOTE_USER'] = user.username
-            redirect '/'
-          else
-            raise Exception, user.errors.full_messages
-          end
-        rescue Exception => e
-          @create_errors = e.message
-        end
-        erb :login
       end
 
-      app.get '/orders' do
-        # redirect if not logged in
-        # list users orders
+      app.post '/logout.json' do
+        session["username"] = nil
+        status 200
+      end
+
+      app.post '/create_account.json' do
+        input = json_to_hash(request.body.read.to_s)
+        if input[:password] != input[:repassword]
+          status 500
+          "Your passwords do not match.".to_json
+        elsif input[:password] == ''
+          status 500
+          "Your password must not be blank.".to_json
+        else
+          user = User.create_account(input)
+          if user.errors.empty?
+            session["username"] = user.username
+            status 200
+            user.username.to_json
+          else
+            status 500
+            user.errors.full_messages.to_json
+          end
+        end
+      end
+
+      app.get '/account' do
+        redirect '/' if !authorized?
+        @user = User.find_by_username(session["username"])
+        erb :account
       end
     end
   end

@@ -8,7 +8,7 @@ class CreateUsers < ActiveRecord::Migration
       t.string :password, :null => false, :limit => 40
     end
  
-    User.create({ :username => "Steph",
+    User.create({ :username => "steph@endpoint.com",
       :password => Digest::SHA1.hexdigest("password") })
   end
 

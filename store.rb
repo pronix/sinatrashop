@@ -47,6 +47,7 @@ class Store < Sinatra::Base
     @title = settings.store_title
   end
   
+  enable :sessions
   get '/' do
     @products = Product.all
     erb :index, :locals => { :params => { :credit_card => {}, :order => {} } }

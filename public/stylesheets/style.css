@@ -40,7 +40,9 @@ img#divider { width: 960px; }
 body.empty_cart div.cart_wrapper { background: url(/images/cart_bg.png) repeat-y top right; width: 985px; }
 body.empty_cart div#ribbon { display: none; }
 body.empty_cart img { margin: 80px 0px; }
+body.empty_cart div#nav { display: none; }
 
+body.cart div#nav { display: none; }
 body.cart div#ribbon { height: 161px; z-index: 2; }
 body.cart div#ribbon a#cart_link { margin-top: 100px; }
 body.cart div#ribbon:hover { background-position: 0px bottom; }
@@ -66,8 +68,5 @@ td#shipping_methods label { width: 49%; float: right; text-align: left; }
 td#shipping_methods div { width: 49%; float: left; text-align: right; position: relative; top: 2px; }  
 td#shipping_methods { padding-bottom: 20px; height: 50px; }
 
-form#login { float: left; width: 49%; }
-form#create_account { float: right; width: 49%; }
-
-div#nav { position: absolute; right: 100px; }
+div#nav { position: absolute; right: 140px; font-size: 13px; top: 10px; text-align: right; }
 div#nav a { color: #FFF; text-decoration: none; }

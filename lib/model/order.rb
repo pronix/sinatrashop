@@ -14,11 +14,11 @@ class Order < ActiveRecord::Base
   validates_presence_of :ship_zipcode
   validates_presence_of :phone
   validates_presence_of :shipping_method_id
-  validates_presence_of :tax_rate_id
   validates_format_of :email, :with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i, :on => :create
 
   belongs_to :shipping_method
   belongs_to :tax_rate
+  belongs_to :user
   has_many :orderlines
 
   def avs_address

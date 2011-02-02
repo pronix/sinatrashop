@@ -1,39 +1,33 @@
 <%= erb "layout/header".to_sym, :locals => { :body_class => 'page' } %>
 
 <div class="wrapper">
-<form action="/login" method="post" id="login">
-	<%= @login_errors.to_s %>
-	<p>
-        <label>email:</label>
-		<input type="text" name="email" />
-    </p>
-	<p>
-        <label>password:</label>
-		<input type="password" name="password" />
-    </p>
-	<p>
-		<input type="submit" value="submit" />
-	</p>
-</form>
-
-<form action="/create_account" method="post" id="create_account">
-	<%= @create_errors.to_s %>
-	<p>
-        <label>email:</label>
-		<input type="text" name="email" />
-    </p>
-	<p>
-        <label>password:</label>
-		<input type="password" name="password" />
-    </p>
-	<p>
-        <label>confirm password:</label>
-		<input type="password" name="repassword" />
-    </p>
-	<p>
-		<input type="submit" value="submit" />
-	</p>
-</form>
+	<div id="login_fields">
+		<p>
+			<label>email:</label>
+			<input type="text" name="email" value="" />
+		</p>
+		<p>
+			<label>password:</label>
+			<input type="password" name="password" value="" />
+		</p>
+		<input id="login" type="submit" value="login" name="login" />
+	</div>
+	<div id="create_fields">
+		<p>
+			<label>email:</label>
+			<input type="text" name="email" value="" />
+		</p>
+		<p>
+			<label>password:</label>
+			<input type="password" name="password" value="" />
+		</p>
+		<p>
+			<label>confirm password:</label>
+			<input type="password" name="repassword" value="" />
+		</p>
+		<input id="create_account" type="submit" value="create_account" name="create_account" />
+	</div>
 </div>
 
 <%= erb "layout/footer".to_sym %>
+<script type="text/javascript" src="/javascripts/userauth.js"></script>

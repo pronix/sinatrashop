@@ -1,0 +1,11 @@
+<%= erb "layout/header".to_sym, :locals => { :body_class => 'page' } %>
+
+<div class="wrapper">
+This is your account. Show orders here.<br />
+<% @user.orders.each do |order| %>
+<%= order.created_at %>
+<%= price_display(order.total) %>
+<% end %>
+</div>
+
+<%= erb "layout/footer".to_sym %>

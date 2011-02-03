@@ -131,7 +131,7 @@
           <p>
             <label>state:</label>
             <select name="[order]bill_state">
-            <%= erb :states, :locals => { :field => "bill_state", :params => params } %>
+            <%= erb :states, :locals => { :field => "bill_state_id", :params => params } %>
             </select>
           </p>
           <p>
@@ -163,7 +163,7 @@
           <p>
             <label>state:</label>
             <select name="[order]ship_state" class="shipping">
-            <%= erb :states, :locals => { :field => "ship_state", :params => params } %>
+            <%= erb :states, :locals => { :field => "ship_state_id", :params => params } %>
             </select>
           </p>
           <p>

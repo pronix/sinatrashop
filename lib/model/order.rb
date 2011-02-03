@@ -4,13 +4,13 @@ class Order < ActiveRecord::Base
   validates_presence_of :bill_lastname
   validates_presence_of :bill_address1
   validates_presence_of :bill_city
-  validates_presence_of :bill_state
+  validates_presence_of :bill_state_id
   validates_presence_of :bill_zipcode
   validates_presence_of :ship_firstname
   validates_presence_of :ship_lastname
   validates_presence_of :ship_address1
   validates_presence_of :ship_city
-  validates_presence_of :ship_state
+  validates_presence_of :ship_state_id
   validates_presence_of :ship_zipcode
   validates_presence_of :phone
   validates_presence_of :shipping_method_id
@@ -20,6 +20,8 @@ class Order < ActiveRecord::Base
   belongs_to :tax_rate
   belongs_to :user
   has_many :orderlines
+  #belongs_to :bill_state, :foreign_key => "bill_state_id", :class_name => "State"
+  #belongs_to :ship_state, :foreign_key => "ship_state_id", :class_name => "State"
 
   def avs_address
     {

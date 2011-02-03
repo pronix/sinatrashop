@@ -48,7 +48,6 @@ module Sinatra
       end
       
       app.post '/cart' do
-        @products = Product.all
         begin
           ActiveRecord::Base.transaction do
             if !params[:order].has_key?(:email) && authorized?
@@ -56,7 +55,6 @@ module Sinatra
               params[:order][:email] = user.username
               params[:order][:user_id] = user.id
             end
-puts "steph: #{params.inspect}"
             order = Order.new(params[:order])
             if order.save
               cart = Cart.new(request.cookies["cart"])

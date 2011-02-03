@@ -2,7 +2,7 @@ class Cart
   attr_accessor :items
   attr_accessor :total
 
-  def initialize(cookie)
+  def initialize(cookie='')
     self.items = []
     cookie ||= ''
     cookie.split(';').each do |item|
@@ -13,17 +13,16 @@ class Cart
 
   def self.to_hash(cookie)
     cookie ||= ''
-    cart = {}
-    cookie.split(';').each do |item|
-      cart[item.split(':')[0]] = (item.split(':')[1]).to_i
+    cookie.split(';').inject({}) do |hash, item|
+      hash[item.split(':')[0]] = (item.split(':')[1]).to_i
+      hash
     end
-    cart
   end
 
   def self.to_string(cart)
-    cookie = ""
+    cookie = ''
     cart.each do |k, v|
-      cookie += "#{k.to_s}:#{v.to_s};" if v.to_i > 0 
+      cookie += "#{k.to_s}:#{v.to_s};" if v.to_i > 0
     end
     cookie
   end
@@ -43,13 +42,10 @@ class Cart
 
   def self.update(cookie, params)
     cart = to_hash(cookie)
-    cart.each do |k, v|
-      cart[k] = params[:quantity][k].to_i
-    end
+    cart.each { |k, v| cart[k] = params[:quantity][k].to_i }
     to_string(cart)
   end
-
-  def self.clear
-    ""
-  end
+  #def self.clear
+  #  ""
+  #end
 end
